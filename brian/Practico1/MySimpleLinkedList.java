@@ -22,30 +22,6 @@ public class MySimpleLinkedList<T> {
 		this.first = tmp;
 		this.sizeList++;
 	}
-	/*
-	public void insertOrd(Node<T> nodo) {
-		if(!isEmpty()) {
-			int contador = 0;
-			Node<T> tmpNext = this.first;
-			Node<T> tmpAnterior = nodo;
-			while(contador <= size()) {
-				if(tmpNext.compareTo(nodo) != -1) {
-					Node<T> nuevoNodo = new Node<T>(nodo.getInfo(), null, null);
-					nuevoNodo.setNext(tmpNext);
-					this.sizeList++;
-				}
-				else {
-					contador++;
-					tmpAnterior = tmpNext;
-					tmpAnterior.setNext(nodo);
-					if(tmpNext.getNext() != null) {
-						tmpNext = tmpNext.getNext();
-					}
-				}
-			}
-		}
-	}
-	*/
 	
 	//devuelve primer elemento y lo elimina
 	public T extractFront() {
@@ -102,18 +78,7 @@ public class MySimpleLinkedList<T> {
 		}
 		return -1;
 	}
-	/*
-	@Override
-	public String toString() {
-		Node<T> temp = this.first;
-		String respuesta = "";
-		for(int i = 0; i <= size(); i++) {
-			respuesta += temp.getInfo().toString();
-			temp = temp.getNext();
-		}
-		return respuesta;
-	}
-	*/
+
 	@Override
 	public String toString() {
 		if(this.first != null) {
@@ -123,15 +88,33 @@ public class MySimpleLinkedList<T> {
 		return "lista vacia";
 	}
 
+	/*
 	public MySimpleLinkedList<T> newList(MySimpleLinkedList<T> la, MySimpleLinkedList<T> lb) {
+		MySimpleLinkedList<T> newList = new MySimpleLinkedList<>();
 		MyIterator l1 = la.getIterador();
 		MyIterator l2 = lb.getIterador();
-		
-		return null;
+		int contadorL1 = 0;
+		int contadorL2 = 0;
+		while((contadorL1 <= la.size())&&(contadorL2 <= lb.size())) {
+			if(l2.get() < l1.get()) {
+				l2.nextNode();
+			}
+			if (l1.get() < l2.get()) {
+				l1.nextNode();
+			}
+			if (l1.get() == l2.get()) {
+				newList.insertFront(l1.get());
+				l1.nextNode();
+				l2.nextNode();
+			}
+			contador++;
+		}
+		return newList;
 	}
 	
 	public MyIterator getIterador() {
 		return new MyIterator<>(this.first);
 	}
+	*/
 	
 }
