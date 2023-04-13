@@ -29,39 +29,6 @@ public class Pila<T> {
     }
 
 
-      
-
-    //Ejercicio 7
-    public MySimpleLinkedList<T> ejercicio7(MySimpleLinkedList<T> l1, MySimpleLinkedList<T> l2) {
-        MySimpleLinkedList<T> newList = new MySimpleLinkedList<>();
-        if(!l1.isEmpty() && !l2.isEmpty()) {
-            int contadorL1 = 0;
-            int contadorL2 = 0;
-            Node<T> tmp = l1.getFirstNode();
-            Node<T> tmp2 = l2.getFirstNode();
-            boolean ocurrencia = false;
-            while(contadorL1 <= l1.size()) { //recorre toda la lista 1
-                while(contadorL2 <= l2.size()) { //recorre toda la lista 2
-                    if(!tmp.getInfo().equals(tmp2.getInfo())) {
-                        contadorL2++;
-                        tmp2 = tmp2.getNext();
-                    }
-                    else {
-                        ocurrencia = true;
-                        contadorL2 = l2.size()+1;
-                    }
-                }
-                if(!ocurrencia) {
-                    newList.insertFront(tmp.getInfo());
-                }
-                contadorL1++;
-                tmp = tmp.getNext();
-            }
-        }
-        return newList;
-    }
-
-
     // MAIN DE PRUEBAS
     public static void main(String[] args) {
         Pila l = new Pila<>();
