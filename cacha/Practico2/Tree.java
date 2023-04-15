@@ -123,7 +123,6 @@ public class Tree {
 		ArrayList<Integer> actual = new ArrayList<Integer>();
 
 		return this.getLongestBranch(solucion, actual);
-
 	}
 	
 	private ArrayList<Integer> getLongestBranch(ArrayList solucion, ArrayList actual) {
@@ -178,6 +177,54 @@ public class Tree {
 		return aux;
 	}
 
+	public Integer getMaxElement(){
+		if(this.value != null){
+			Integer maxElement = this.value;
+
+			return getMaxElement(maxElement);
+		}
+
+		return null;
+	}
+
+	private Integer getMaxElement(Integer maxElement) {
+
+		if(maxElement < this.value){
+			maxElement = this.value;
+		}
+
+		if(this.left != null){
+			maxElement = this.left.getMaxElement(maxElement);
+		}
+
+		if(this.right != null){
+			maxElement = this.right.getMaxElement(maxElement);
+		}
+
+		return maxElement;
+	}
+
+	/*
+
+	Preguntar no se me ocurre como resolverlo, toy quemado
+
+	public ArrayList<Integer> getElementAtLevel(int level){
+		if(this.value != null){
+				
+			ArrayList<Integer> aux = new ArrayList<Integer>();
+
+			if(level == 0){
+					aux.add((Integer) this.value);
+					return aux;
+				}
+
+				for(int i = 0; i != level-1; i++, level--){
+					
+				}
+		}
+
+		return null;
+	} */
 	public static void main(String[] args) {
 		Tree newTree = new Tree(50);
 		newTree.add(70);
@@ -190,7 +237,7 @@ public class Tree {
 		newTree.add(38);
 		newTree.add(100);
 
-		System.out.println(newTree.getLongestBranch());
+		System.out.println(newTree.getMaxElement());
         //System.out.println(newTree.hasElement(3));
         //System.out.println(newTree.hasElement(5));
         //System.out.println(newTree.hasElement(7));
