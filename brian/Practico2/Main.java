@@ -15,7 +15,8 @@ public class Main {
         nuevoArbol.add(100);
         /*System.out.println(nuevoArbol.getFrontera());*/
         /*System.out.println(nuevoArbol.getLongestBranch());*/
-        System.out.println(nuevoArbol.getMaxElem());
+        /*System.out.println(nuevoArbol.getMaxElem());*/
+        System.out.println(nuevoArbol.getElemAtLevel(1));
     }
 }
 

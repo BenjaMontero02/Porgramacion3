@@ -209,6 +209,32 @@ public class Tree {
             }
             return null;
         }
+
+        private ArrayList<Integer> getElemAtLevel(ArrayList<Integer> arr, int level, int jumps) {
+            if(jumps == level) {
+                arr.add(this.value);
+            }
+            else {
+                if(this.left != null){
+                    this.left.getElemAtLevel(arr, level, jumps+1);
+                }
+                if(this.right != null){
+                    this.right.getElemAtLevel(arr, level, jumps+1);
+                }
+                return arr;
+            }
+            return null;
+        }
+
+        public ArrayList<Integer> getElemAtLevel(int level) {
+            if(this.value != null) {
+                ArrayList<Integer> list = new ArrayList<>();
+                int jumps = 0;
+                return this.getElemAtLevel(list, level, jumps);
+            }
+            return null;
+        }
+        
         
 
 
