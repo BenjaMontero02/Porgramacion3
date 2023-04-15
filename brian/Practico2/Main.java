@@ -4,13 +4,17 @@ public class Main {
     public static void main(String[] args) {
 
         /*Prueba de funcionamiento altura de arbol */
-        Tree nuevoArbol = new Tree(5);
-        nuevoArbol.add(7);
-        nuevoArbol.add(3);
-        nuevoArbol.add(4);
-        nuevoArbol.add(9);
-        nuevoArbol.add(10);
-        System.out.println(nuevoArbol.getHeight());
+        Tree nuevoArbol = new Tree(50);
+        nuevoArbol.add(70);
+        nuevoArbol.add(30);
+        nuevoArbol.add(90);
+        nuevoArbol.add(80);
+        nuevoArbol.add(40);
+        nuevoArbol.add(36);
+        nuevoArbol.add(38);
+        nuevoArbol.add(100);
+        /*System.out.println(nuevoArbol.getFrontera());*/
+        System.out.println(nuevoArbol.getLongestBranch());
     }
 }
 

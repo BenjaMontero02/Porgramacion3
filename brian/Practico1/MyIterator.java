@@ -2,9 +2,9 @@ import java.util.Iterator;
 
 public class MyIterator<T> implements Iterator<T> {
 
-    private Node cursor;
+    private Node<T> cursor;
 
-    public <T> MyIterator(Node<T> obj) {
+    public <T> MyIterator(Node obj) {
         this.cursor = obj;
     }
 
@@ -16,7 +16,7 @@ public class MyIterator<T> implements Iterator<T> {
     }
 
     public T get() {
-        T temp = (T) this.cursor.getInfo();
+        T temp = this.cursor.getInfo();
         return temp;
     }
 
