@@ -185,33 +185,29 @@ public class Tree {
             return arr;
         }
 
-        public Integer getMaxElem(Integer solucion, Integer actual) {
-            if(this.value != null) {
-                actual = this.value;
-                if(this.left != null) {
-                    if(solucion < this.left.getMaxElem(solucion,actual)) {
-                        solucion = this.left.getMaxElem(solucion,actual);
-                    }
-                }
-                if(this.right != null) {
-                    if(solucion < this.right.getMaxElem(solucion,actual)) {
-                        solucion = this.right.getMaxElem(solucion,actual);
-                    }
-                }
-                if(solucion < actual) {
-                    return actual;
-                }
-                else {
-                    return solucion;
-                }
+        public Integer getMaxElem(Integer solucion) {
+            if(solucion < this.value){
+                solucion = this.value;
             }
-            return null;
+    
+            if(this.left != null){
+                solucion = this.left.getMaxElem(solucion);
+            }
+    
+            if(this.right != null){
+                solucion = this.right.getMaxElem(solucion);
+            }
+    
+            return solucion;
         }
 
+        //metodo publico
         public Integer getMaxElem() {
-            Integer valor = 0;
-            Integer solucion = 0;
-            return getMaxElem(valor,solucion);
+            if(this.value != null) {
+                Integer solucion = this.value;
+                return getMaxElem(solucion);
+            }
+            return null;
         }
         
 
