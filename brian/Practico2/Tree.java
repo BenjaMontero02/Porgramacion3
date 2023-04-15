@@ -2,6 +2,8 @@ package brian.Practico2;
 
 import java.util.ArrayList;
 
+import javax.security.sasl.AuthorizeCallback;
+
 public class Tree {
 
 	private Integer value;
@@ -129,28 +131,39 @@ public class Tree {
             }
         }*/
 
-        private ArrayList<Integer> getLongestBranch(ArrayList<Integer> a1, ArrayList<Integer> a2)  {
-            a1.add(this.value);
-            a2.add(this.value);
-            if(this.left != null) {
-                a1.addAll(this.left.getLongestBranch(a1,a2));
-            }
-            if (this.right != null) {
-                a2.addAll(this.right.getLongestBranch(a1,a2));
+        private ArrayList<Integer> getLongestBranch(ArrayList<Integer> solucion, ArrayList<Integer> actual)  {
+            if(this.value != null) {
+                actual.add(this.value);
+    
+                if(this.left!= null) {
+                    this.left.getLongestBranch(solucion, actual);
+                }
+    
+                if(solucion.size() < actual.size()) {
+                    solucion.clear();
+                    solucion.addAll(actual);
+                }
+    
+                if(this.right != null) {
+                    this.right.getLongestBranch(solucion, actual);
+                }
+    
+                if(solucion.size() < actual.size()) {
+                    solucion.clear();
+                    solucion.addAll(actual);
+                }
+    
+                actual.remove(actual.size()-1);
+                return solucion;
             }
 
-            if(a1.size() > a2.size()) {
-                return a1;
-            }
-            else {
-                return a2;
-            }
+            return null;
         }
 
         public ArrayList<Integer> getLongestBranch() {
             ArrayList<Integer> arr = new ArrayList<>();
             ArrayList<Integer> arr2 = new ArrayList<>();
-            return getLongestBranch(arr, arr2);
+            return this.getLongestBranch(arr, arr2);
         }
 
         public ArrayList<Integer> getFrontera() {
@@ -172,6 +185,35 @@ public class Tree {
             return arr;
         }
 
+        public Integer getMaxElem(Integer solucion, Integer actual) {
+            if(this.value != null) {
+                actual = this.value;
+                if(this.left != null) {
+                    if(solucion < this.left.getMaxElem(solucion,actual)) {
+                        solucion = this.left.getMaxElem(solucion,actual);
+                    }
+                }
+                if(this.right != null) {
+                    if(solucion < this.right.getMaxElem(solucion,actual)) {
+                        solucion = this.right.getMaxElem(solucion,actual);
+                    }
+                }
+                if(solucion < actual) {
+                    return actual;
+                }
+                else {
+                    return solucion;
+                }
+            }
+            return null;
+        }
+
+        public Integer getMaxElem() {
+            Integer valor = 0;
+            Integer solucion = 0;
+            return getMaxElem(valor,solucion);
+        }
+        
 
 
 
