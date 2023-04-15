@@ -234,6 +234,31 @@ public class Tree {
             }
             return null;
         }
+
+        private int getSumInternos(int suma) {
+            if((this.left != null) || (this.right != null)) {
+                suma = this.value;
+                if(this.left != null){
+                    suma += this.left.getSumInternos(suma);
+                }
+                if(this.right != null){
+                    suma += this.right.getSumInternos(suma);
+                }
+                return suma;
+            }
+
+            return suma;
+        }
+
+        public int getSumInternos() {
+            if(this.value != null) {
+                int suma = 0;
+                suma += this.getSumInternos(suma);
+                return suma;
+            }
+            return 0;
+        }
+
         
         
 
