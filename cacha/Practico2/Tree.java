@@ -1,4 +1,3 @@
-import java.nio.file.attribute.AclFileAttributeView;
 import java.util.ArrayList;
 
 public class Tree {
@@ -225,19 +224,43 @@ public class Tree {
 
 		return null;
 	} */
+
+	public Integer getAmountOfTheTree(){
+		if(this.value!= null){
+            int sum = 0;
+			sum += this.getAmountOfTheTree(sum);
+			return sum;
+        }
+
+		return null;
+	}
+
+	private int getAmountOfTheTree(int sum){
+		sum = this.value.intValue();
+		if(this.left != null){
+			sum += this.left.getAmountOfTheTree(sum);
+		}
+		
+		if(this.right!= null){
+			sum += this.right.getAmountOfTheTree(sum);
+        }
+		
+		return sum ;
+	}
+
 	public static void main(String[] args) {
 		Tree newTree = new Tree(50);
 		newTree.add(70);
 		newTree.add(30);
-		
 		newTree.add(90);
 		newTree.add(80);
 		newTree.add(40);
 		newTree.add(36);
 		newTree.add(38);
 		newTree.add(100);
+		
 
-		System.out.println(newTree.getMaxElement());
+		System.out.println(newTree.getAmountOfTheTree());
         //System.out.println(newTree.hasElement(3));
         //System.out.println(newTree.hasElement(5));
         //System.out.println(newTree.hasElement(7));
