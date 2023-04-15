@@ -1,3 +1,6 @@
+import java.nio.file.attribute.AclFileAttributeView;
+import java.util.ArrayList;
+
 public class Tree {
 
 	private Integer value;
@@ -84,17 +87,16 @@ public class Tree {
 		}
 	}
 
-	//No funca, preguntar mañana
 	public void printPreOrder(){
 		if(this.value != null){
 			System.out.println(this.value + "");
 			
 			if(this.left != null) {
-				this.left.printPosOrder();
+				this.left.printPreOrder();
 			}
 			
 			if(this.right != null) {
-				this.right.printPosOrder();
+				this.right.printPreOrder();
 			}
 			
 		}
@@ -116,14 +118,79 @@ public class Tree {
         }
 	}
 
-	public static void main(String[] args) {
-		Tree newTree = new Tree(4);
-		newTree.add(5);
-		newTree.add(8);
-		newTree.add(3);
-		newTree.add(7);
+	public ArrayList<Integer> getLongestBranch(){
+		ArrayList<Integer> solucion = new ArrayList<Integer>();
+		ArrayList<Integer> actual = new ArrayList<Integer>();
 
-		newTree.printPreOrder();
+		return this.getLongestBranch(solucion, actual);
+
+	}
+	
+	private ArrayList<Integer> getLongestBranch(ArrayList solucion, ArrayList actual) {
+		if(this.value != null) {
+			actual.add(this.value);
+
+			if(this.left!= null) {
+                this.left.getLongestBranch(solucion, actual);
+            }
+
+			if(solucion.size() < actual.size()) {
+				solucion.clear();
+				solucion.addAll(actual);
+			}
+
+			if(this.right != null) {
+				this.right.getLongestBranch(solucion, actual);
+			}
+
+			if(solucion.size() < actual.size()) {
+				solucion.clear();
+				solucion.addAll(actual);
+			}
+
+			actual.remove(actual.size()-1);
+			return solucion;
+
+		}
+
+		return null;
+	}
+
+	public ArrayList<Integer> getFrontera(){
+		ArrayList<Integer> aux = new ArrayList<Integer>();
+
+		return getFrontera(aux);
+	}
+
+	private ArrayList<Integer> getFrontera(ArrayList<Integer> aux){
+		if(this.left == null && this.right == null){
+			aux.add((Integer) this.value);
+		}
+
+		if(this.left != null){
+			this.left.getFrontera(aux);
+		}
+
+		if(this.right != null){
+			this.right.getFrontera(aux);
+		}
+
+		return aux;
+	}
+
+	public static void main(String[] args) {
+		Tree newTree = new Tree(50);
+		newTree.add(70);
+		newTree.add(30);
+		
+		newTree.add(90);
+		newTree.add(80);
+		newTree.add(40);
+		newTree.add(36);
+		newTree.add(38);
+		newTree.add(100);
+
+		System.out.println(newTree.getLongestBranch());
         //System.out.println(newTree.hasElement(3));
         //System.out.println(newTree.hasElement(5));
         //System.out.println(newTree.hasElement(7));
