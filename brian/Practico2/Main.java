@@ -17,7 +17,8 @@ public class Main {
         /*System.out.println(nuevoArbol.getLongestBranch());*/
         /*System.out.println(nuevoArbol.getMaxElem());*/
         /*System.out.println(nuevoArbol.getElemAtLevel(1));*/
-        System.out.println(nuevoArbol.getSumInternos());
+        /*System.out.println(nuevoArbol.getSumInternos());*/
+        System.out.println(nuevoArbol.getHigherValues(80));
     }
 }
 

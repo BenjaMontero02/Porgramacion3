@@ -247,7 +247,7 @@ public class Tree {
                 return suma;
             }
 
-            return suma;
+            return 0;
         }
 
         public int getSumInternos() {
@@ -257,6 +257,32 @@ public class Tree {
                 return suma;
             }
             return 0;
+        }
+
+        public ArrayList<Integer> getHigherValues(ArrayList<Integer> arr, int k) {
+            if(this.value > k) {
+                arr.add(this.value);
+                if(this.left != null) {
+                    this.left.getHigherValues(arr, k);
+                }
+                if(this.right != null) {
+                    this.right.getHigherValues(arr, k);
+                }
+            }
+            else {
+                if(this.right != null) {
+                    this.right.getHigherValues(arr, k);
+                }
+            }
+            return arr;
+        }
+
+        public ArrayList<Integer> getHigherValues(int k) {
+            if(this.value != null) {
+                ArrayList<Integer> list = new ArrayList<>();
+                return this.getHigherValues(list, k);
+            }
+            return null;
         }
 
         
