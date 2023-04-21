@@ -96,12 +96,6 @@ public class Tree {
             }
         }
     }
-
-    public ArrayList<Integer> getListHojas() {
-        ArrayList<Integer> list = new ArrayList<>();
-        return this.getListHojas(list); 
-    }
-
     
     public Integer completeTree() {
         Integer antIzq=0;
@@ -136,21 +130,6 @@ public class Tree {
             this.value = (antD - antI);
         }
         return this.value;
-    }
-    
-
-
-    private ArrayList<Integer> getListHojas(ArrayList<Integer> arr) {
-        if(this.value != null) {
-            arr.add(this.value);
-        }
-        if(this.left != null) {
-            this.left.getListHojas(arr);
-        }
-        if(this.right != null) {
-            this.right.getListHojas(arr);
-        }
-        return arr;
     }
 
     public int getHeight() {

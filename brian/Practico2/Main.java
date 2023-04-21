@@ -23,7 +23,7 @@ public class Main {
         /*System.out.println(nuevoArbol.getHigherValues(80));*/
 
         nuevoArbol.delete(); //Borra los internos
-        System.out.println(nuevoArbol.getListHojas()); //muesta las hojas que quedaron
+        System.out.println(nuevoArbol.getFrontera());
         System.out.println(nuevoArbol.completeTree()); //completa arbol y devuelve la raiz (hice el calculo y da bien la raiz)
     }
 }
