@@ -1,5 +1,6 @@
 package lucas.Practico2;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.security.sasl.AuthorizeCallback;
@@ -272,4 +273,30 @@ public class Tree {
             }
         }
     
+        private ArrayList<Character> getPalabra(ArrayList<Character> palabra, int n, int contador){
+            if(this.value != null && contador<=n){
+                palabra.add(value);
+            }
+            if(this.left != null){
+                if(this.left.getValue() == 'a' || this.left.getValue() == 'e' || this.left.getValue() == 'i'
+                    || this.left.getValue() == 'o' || this.left.getValue() == 'u'){
+                        contador++;
+                }
+                this.left.getPalabra(palabra, n);
+            }
+            if(this.right != null){
+                if(this.right.getValue() == 'a' || this.right.getValue() == 'e' || this.right.getValue() == 'i'
+                    || this.right.getValue() == 'o' || this.right.getValue() == 'u'){
+                    contador++;
+            }
+                this.right.getPalabra(palabra, n);
+            }
+            return palabra;
+        } 
+
+        public ArrayList<Character> getPalabra(int n){
+            int c = 0;
+            ArrayList<Character> palabra = new ArrayList<>();
+            return getPalabra(palabra, n, c);
+        }
 }
