@@ -56,6 +56,81 @@ public class Tree {
 				this.right.add(newValue);
 		}
 	}
+    /*
+    public boolean delete(Integer nodo, Integer nodoAnterior) {
+        if(this.value == nodo) {
+            if(this.left == null && this.right == null) { //es hoja
+                this.value = null;
+                return true;
+            }
+            if(this.left != null && this.right == null) {
+                this.value = this.left.getValue();
+                return false;
+            }
+            if(this.left == null && this.right != null) {
+                return false;
+            }
+            if(this.left != null && this.right != null) {
+                return false;
+            }
+        }
+        return false;
+    }
+    
+
+    public boolean delete(Integer nodo) {
+        if(this.value != null) {
+            return this.delete(nodo, 0);
+        }
+        return false;
+    }*/
+
+    public void delete() {
+        if(this.value != null && (this.left != null || this.right != null)) {
+            this.value = null;
+            if(this.left != null) {
+                this.left.delete();
+            }
+            if(this.right != null) {
+                this.right.delete();
+            }
+        }
+    }
+    
+    public Integer completeTree() {
+        Integer antIzq=0;
+        Integer antDer=0;
+        return this.completeTree(antIzq, antDer);
+    }
+    private Integer completeTree(Integer antI,Integer antD) {
+        if(this.value == null) {
+            if (this.left != null){ //pregunto si left es null
+                if(this.left.getValue() == null) { //pregunto si su valor es null
+                    antI = this.left.completeTree(antI, antD);
+                }
+                else {
+                    antI = this.left.getValue();
+                }
+            }
+            else {
+                antI = 0;
+            }
+            if (this.right != null) {
+                if(this.right.getValue() == null) { //pregunto si su valor es nullo
+                    antD = this.right.completeTree(antI, antD);
+                }
+                else {
+                    antD = this.right.getValue();
+                }
+            }
+            else {
+                antD = 0;
+            }
+
+            this.value = (antD - antI);
+        }
+        return this.value;
+    }
 
     public int getHeight() {
         int alturaIzq=0;
