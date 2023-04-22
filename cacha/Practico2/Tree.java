@@ -2,11 +2,11 @@ import java.util.ArrayList;
 
 public class Tree {
 
-	private Integer value;
+	private String value;
 	private Tree left;
 	private Tree right;
 
-	public Tree(int value) {
+	public Tree(String value) {
 		this.value = value;
 		this.left = null;
 		this.right = null;
@@ -16,13 +16,13 @@ public class Tree {
 		return this.value;
 	}
 
-	public void add(Integer newValue) {
-		if (newValue < this.value) {
+	public void add(String newValue) {
+		if (newValue.compareTo(this.value) == 1) {
 			if (this.left == null)
 				this.left = new Tree(newValue);
 			else
 				this.left.add(newValue);
-		} else if (newValue > this.value) {
+		} else if (newValue.compareTo(this.value) == -1) {
 			if (this.right == null)
 				this.right = new Tree(newValue);
 			else
@@ -87,7 +87,7 @@ public class Tree {
 	}
 
 	public void printPreOrder(){
-		if(this.value != null){
+		
 			System.out.println(this.value + "");
 			
 			if(this.left != null) {
@@ -98,12 +98,11 @@ public class Tree {
 				this.right.printPreOrder();
 			}
 			
-		}
+		
 	}
 
 	public void printInOrder(){
-		if(this.value!= null){
-			
+		
             if(this.left!= null) {
                 this.left.printInOrder();
             }
@@ -114,7 +113,7 @@ public class Tree {
                 this.right.printInOrder();
             }
             
-        }
+        
 	}
 
 	public ArrayList<Integer> getLongestBranch(){
@@ -226,17 +225,15 @@ public class Tree {
 	} */
 
 	public Integer getAmountOfTheTree(){
-		if(this.value!= null){
             int sum = 0;
 			sum += this.getAmountOfTheTree(sum);
 			return sum;
-        }
-
-		return null;
 	}
 
 	private int getAmountOfTheTree(int sum){
-		sum = this.value.intValue();
+		if(this.value != null){
+			sum = this.value.intValue();
+		}
 		if(this.left != null){
 			sum += this.left.getAmountOfTheTree(sum);
 		}
@@ -248,19 +245,131 @@ public class Tree {
 		return sum ;
 	}
 
-	public static void main(String[] args) {
-		Tree newTree = new Tree(50);
-		newTree.add(70);
-		newTree.add(30);
-		newTree.add(90);
-		newTree.add(80);
-		newTree.add(40);
-		newTree.add(36);
-		newTree.add(38);
-		newTree.add(100);
-		
+	public ArrayList<Integer> getAllElementsMayoresToInt(int k){
+        ArrayList<Integer> aux = new ArrayList<Integer>();
 
-		System.out.println(newTree.getAmountOfTheTree());
+		if(this.value != null){
+			
+			return this.getAllElementsMayoresToInt(aux, k);
+		}
+
+        return null;
+    }
+
+	private ArrayList<Integer> getAllElementsMayoresToInt(ArrayList<Integer> aux, int k){
+
+		if(this.left == null && this.right == null){
+			
+			if(this.value.intValue() == k){
+				aux.add(this.value);
+				return aux;
+			}
+
+		}else if(this.left != null){
+			this.left.getAllElementsMayoresToInt(aux, k);
+		}else if(this.right != null){
+			this.right.getAllElementsMayoresToInt(aux, k);
+		}
+
+		return aux;
+	}
+
+	public void deleteValue(){
+		if(this.right != null || this.left != null){
+			this.value = null;
+		}
+		
+		if(this.left != null){
+			this.left.deleteValue();
+		}
+
+		if(this.right!= null){
+            this.right.deleteValue();
+        }
+	}
+
+	public void complete(){
+
+		if(this.left != null){
+			this.left.complete();
+		}
+
+		if(this.right != null){
+			this.right.complete();
+		}
+	
+		if(this.left == null && this.right != null){
+			this.value = this.right.value - 0;
+		}else if(this.right == null && this.left != null){
+			this.value = 0 - this.left.value;
+		}else if (this.left != null && this.right != null){
+			this.value = this.right.value - this.left.value;
+		}
+	}
+
+	public ArrayList<String> getWordsMaxVocal(int cant){
+
+		ArrayList<String> array = new ArrayList<String>();
+		String copy = null;
+
+		int contador = 0;
+
+		return this.getWordsMaxVocal(array, copy, cant, contador);
+	}
+
+	private ArrayList<String> getWordsMaxVocal(ArrayList<String> array, ArrayList<String> copy, int cant){
+
+		if(this.value != null){
+
+			
+			if(isVocal(this.value) && cant != 0){
+				copy += this.value;
+				cant--;
+			}else if(!isVocal(this.value)){
+				copy += this.value;
+			}
+
+			if(this.left!= null){
+                this.left.getWordsMaxVocal(array, copy, cant);
+            }
+
+			if(this.right != null){
+				this.right.getWordsMaxVocal(array, copy, cant);
+			}
+
+			if(this.left == null && this.right == null && cant == 0){
+				array.add(copy);
+				copy.substring(0, copy.length() -1);
+				
+				if(isVocal(this.value)){
+					cant++;
+				}
+			}
+		}
+
+		return array;
+	}
+
+	public boolean isVocal(String value){
+		if(value == "a" || value == "e" || value == "i" || value == "o" || value == "u"){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static void main(String[] args) {
+		Tree newTree = new Tree("m");
+        newTree.add("a");
+        newTree.add("l");
+		newTree.add("i");
+		newTree.printPreOrder();
+
+		// newTree.deleteValue();
+		// newTree.complete();
+		// System.out.println(newTree.getRoot());
+	
+		//System.out.println(newTree.getAmountOfTheTree());
         //System.out.println(newTree.hasElement(3));
         //System.out.println(newTree.hasElement(5));
         //System.out.println(newTree.hasElement(7));
