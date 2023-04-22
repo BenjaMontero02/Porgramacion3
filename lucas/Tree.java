@@ -58,6 +58,20 @@ public class Tree {
 		}
 	}
 
+    public void addChar(char newValue) {
+		if (newValue < this.value) {
+			if (this.left == null)
+				this.left = new Tree(newValue);
+			else
+				this.left.add(newValue);
+		} else if (newValue > this.value) {
+			if (this.right == null)
+				this.right = new Tree(newValue);
+			else
+				this.right.add(newValue);
+		}
+	}
+
     public int getHeight() {
         int alturaIzq=0;
         int alturaDer=0;
@@ -231,21 +245,26 @@ public class Tree {
         }
 
         public int getSumaElementos(){
-            int suma = this.value.intValue();
-            if(this.left != null ){
-                suma += this.left.getSumaElementos();
+            if(this.left == null && this.right == null){
+                return 0;
             }
-            if(this.right != null){
-                suma += this.right.getSumaElementos();
+            else{
+                int suma = this.value.intValue();
+                if(this.left != null){
+                    suma += this.left.getSumaElementos();
+                }
+                if(this.right != null){
+                    suma += this.right.getSumaElementos();
+                }
+                return suma;
             }
-            return suma;
         }
 
         private ArrayList<Integer> getMayores(int k, ArrayList<Integer> mayores){
-            if(this.value != null && this.value.intValue() > k){
+            if(this.left == null && this.right == null && this.value.intValue() > k){
                 mayores.add(value);
             }
-            if (this.left != null) {
+            if (this.left != null && this.value > k) {
                 this.left.getMayores(k, mayores);
             }
             if (this.right != null) {
@@ -273,30 +292,36 @@ public class Tree {
             }
         }
     
-        private ArrayList<Character> getPalabra(ArrayList<Character> palabra, int n, int contador){
-            if(this.value != null && contador<=n){
-                palabra.add(value);
+        private ArrayList<String> getPalabra(String palabra, int n, int contador){
+            ArrayList<String> aux = new ArrayList<>();
+            if(this.value.getValue() == 'a' || this.value.getValue() == 'e' || this.value.getValue() == 'i'
+                || this.value.getValue() == 'o' || this.value.getValue() == 'u'){
+                contador++;
             }
-            if(this.left != null){
-                if(this.left.getValue() == 'a' || this.left.getValue() == 'e' || this.left.getValue() == 'i'
-                    || this.left.getValue() == 'o' || this.left.getValue() == 'u'){
-                        contador++;
-                }
-                this.left.getPalabra(palabra, n);
-            }
-            if(this.right != null){
-                if(this.right.getValue() == 'a' || this.right.getValue() == 'e' || this.right.getValue() == 'i'
-                    || this.right.getValue() == 'o' || this.right.getValue() == 'u'){
-                    contador++;
-            }
-                this.right.getPalabra(palabra, n);
-            }
-            return palabra;
-        } 
 
-        public ArrayList<Character> getPalabra(int n){
+            palabra += this.getValue();
+            
+            if(this.left == null && this.right == null){
+                if(contador == n){
+                    aux.add(palabra);
+                }
+            }
+            else{
+                if(contador <= n){
+                    if(this.left != null){
+                        aux.addAll(this.left.getPalabra());
+                    }
+                    if(this.right != null){
+                        aux.addAll(this.right.getPalabra());
+                    }
+                }
+            }
+            return aux;
+        }
+        public ArrayList<String> getPalabra(int n){
             int c = 0;
-            ArrayList<Character> palabra = new ArrayList<>();
+            String palabra = ' ';
+            ArrayList<String> palabras = new ArrayList<>();
             return getPalabra(palabra, n, c);
         }
 }

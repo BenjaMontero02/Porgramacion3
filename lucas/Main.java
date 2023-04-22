@@ -1,24 +1,27 @@
 package lucas.Practico2;
 
+import javax.smartcardio.ATR;
+
 public class Main {
     public static void main(String[] args) {
 
         /*Prueba de funcionamiento altura de arbol */
-        Tree nuevoArbol = new Tree(50);
-        nuevoArbol.add(70);
-        nuevoArbol.add(30);
-        nuevoArbol.add(90);
-        nuevoArbol.add(80);
-        nuevoArbol.add(40);
-        nuevoArbol.add(36);
-        nuevoArbol.add(38);
-        nuevoArbol.add(100);
+        Tree nuevoArbol = new Tree('m');
+        nuevoArbol.addChar('a');
+        nuevoArbol.addChar('i');
+        nuevoArbol.addChar('l');
+        nuevoArbol.addChar('n');
+        nuevoArbol.addChar('a');
+        nuevoArbol.addChar('o');
+        nuevoArbol.addChar('s');
+        nuevoArbol.addChar('o');
+        nuevoArbol.addChar('a');
         /*System.out.println(nuevoArbol.getFrontera());*/
         /*System.out.println(nuevoArbol.getLongestBranch());*/
         /*System.out.println(nuevoArbol.getMaxElem());*/
         /*System.out.println(nuevoArbol.ListgetElemAtLevel(1));*/
         /*System.out.println(nuevoArbol.getSumaElementos());*/
-        System.out.println(nuevoArbol.getMayores(55));
+        System.out.println(nuevoArbol.getPalabra(1));
     }
 }
 
