@@ -293,6 +293,9 @@ public class Tree {
         }
     
         private ArrayList<String> getPalabra(String palabra, int n, int contador){
+            // deberias cambiar el arreglo aux y instanciarlo en la funcion publica
+            // xq si no cada vez q lo llamas recursivamente volves a instanciarlo
+
             ArrayList<String> aux = new ArrayList<>();
             if(this.value.getValue() == 'a' || this.value.getValue() == 'e' || this.value.getValue() == 'i'
                 || this.value.getValue() == 'o' || this.value.getValue() == 'u'){
