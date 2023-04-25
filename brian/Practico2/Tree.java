@@ -19,6 +19,17 @@ public class Tree {
 	public Integer getValue() {
 		return value;
 	}
+    public void setValue(Integer v) {
+		this.value = v;
+	}
+
+    public Tree getLeft() {
+        return left;
+    }
+
+    public Tree getRight() {
+        return right;
+    }
 
     public boolean hasElem(Integer num) {
         if(num != this.value) {
@@ -56,35 +67,99 @@ public class Tree {
 				this.right.add(newValue);
 		}
 	}
-    /*
-    public boolean delete(Integer nodo, Integer nodoAnterior) {
-        if(this.value == nodo) {
-            if(this.left == null && this.right == null) { //es hoja
-                this.value = null;
+
+    //numero mas a la izquierda del sub arbol derecho
+    public int getNMI() {
+        if (this.value != null && this.right != null) {
+            int result = 0;
+            return this.right.getNMI(result);
+        }
+        return 0;
+    }
+    private int getNMI(int result) {
+        if(this.left != null) {
+            return this.left.getNMI(result);
+        }
+        else {
+            return this.value;
+        }
+    }
+
+    //anda borrar: sin hijos, con un hijo
+    private boolean delete(Integer node, int nmi) {
+
+        if(node < this.value) {//the node is less than my root
+            //left son
+            if (this.left.getValue() == node && this.left.getLeft() == null && this.left.getRight() == null) { //its a LEAF
+                this.left = null;
                 return true;
             }
-            if(this.left != null && this.right == null) {
-                this.value = this.left.getValue();
-                return false;
+            if (this.left.getValue() == node && this.left.getLeft() != null && this.left.getRight() == null) { //has left
+                this.left = this.left.getLeft();
+                return true;
             }
-            if(this.left == null && this.right != null) {
-                return false;
+            if (this.left.getValue() == node && this.left.getLeft() == null && this.left.getRight() != null) { //has right
+                this.left = this.left.getRight();
+                return true;
             }
-            if(this.left != null && this.right != null) {
-                return false;
+            if (this.left.getValue() == node && this.left.getLeft() != null && this.left.getRight() != null) {
+                nmi = this.left.getNMI();
+                if(this.left.delete(nmi)) {
+                    this.left.setValue(nmi);
+                    return true;
+                }
+            }
+            else {
+                return this.left.delete(node,nmi);
+            }
+        }
+        else {//the node is bigger to my root
+            //right son
+            if (this.right.getValue() == node && this.right.getLeft() == null && this.right.getRight() == null) { //its a LEAF
+                this.right = null;
+                return true;
+            }
+            if (this.right.getValue() == node && this.right.getLeft() != null && this.right.getRight() == null) { //has left
+                this.right = this.right.getLeft();
+                return true;
+            }
+            if (this.right.getValue() == node && this.right.getLeft() == null && this.right.getRight() != null) { //has right
+                this.right = this.right.getRight();
+                return true;
+            }
+            if (this.right.getValue() == node && this.right.getLeft() != null && this.right.getRight() != null) {
+                nmi = this.right.getNMI();
+                if(this.right.delete(nmi)) {
+                    this.right.setValue(nmi);
+                    return true;
+                }
+            }
+            else {
+                return this.right.delete(node,nmi);
             }
         }
         return false;
     }
-    
 
-    public boolean delete(Integer nodo) {
+    public boolean delete(Integer node) {
         if(this.value != null) {
-            return this.delete(nodo, 0);
+            int nmi = 0;
+            if (this.value == node && this.left != null && this.right != null) {
+                nmi = this.getNMI();
+                if(this.delete(nmi)) {
+                    this.setValue(nmi);
+                    return true;
+                }
+            }
+            else {
+                return this.delete(node,nmi);
+            }
         }
         return false;
-    }*/
+    }
 
+
+    /* delete bruto de arbol 
     public void delete() {
         if(this.value != null && (this.left != null || this.right != null)) {
             this.value = null;
@@ -96,6 +171,7 @@ public class Tree {
             }
         }
     }
+    */
     
     public Integer completeTree() {
         Integer antIzq=0;
@@ -361,9 +437,6 @@ public class Tree {
         }
 
         
-        
-
-
 
 
 }
