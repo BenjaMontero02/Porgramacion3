@@ -1,6 +1,7 @@
 package brian.Practico2;
 
 import java.util.ArrayList;
+import java.util.concurrent.CancellationException;
 
 public class TreeStrings implements Comparable<String>{
 
@@ -60,39 +61,49 @@ public class TreeStrings implements Comparable<String>{
         }
     }
 
-    private ArrayList<String> getPalabra(ArrayList<String> arr, String palabra, int n, int contador){
-        // deberias cambiar el arreglo aux y instanciarlo en la funcion publica
-        // xq si no cada vez q lo llamas recursivamente volves a instanciarlo
-
-        if(isVowel(this.value)){
-            contador++;
+    private ArrayList<String> getPalabras(ArrayList<String> palabras, String palabra, int cantVocales){
+        if(isVowel(this.value)) {
+            cantVocales--;
+            if(cantVocales == -1) {
+                return palabras;
+            }
         }
+        palabra += this.value;
 
-        palabra += this.getValue();
+        if(cantVocales == 0 && this.left == null && this.right == null) {
+            palabras.add(palabra);
+            palabra = palabra.substring(1, palabra.length() - 1); //elimino ultimo caracter
+            return palabras;
+        }
+        if(cantVocales == 0) {
+            palabra = palabra.substring(1, palabra.length() - 1); //elimino ultimo caracter
+            return palabras;
+        }
         
-        if(this.left == null && this.right == null){
-            if(contador == n){
-                arr.add(palabra);
+        if(cantVocales > 0){
+            if(this.left != null){
+                palabras.addAll(this.left.getPalabras(palabras, palabra, cantVocales));
+            }
+            if(this.right != null){
+                palabras.addAll(this.right.getPalabras(palabras, palabra, cantVocales));
+            }
+            if(this.left == null && this.right == null) {
+                palabra = palabra.substring(1, palabra.length() - 1);
             }
         }
-        else{
-            if(contador <= n){
-                if(this.left != null){
-                    arr.addAll(this.left.getPalabra(arr,palabra, n, contador));
-                }
-                if(this.right != null){
-                    arr.addAll(this.right.getPalabra(arr,palabra, n, contador));
-                }
-            }
-        }
-        return arr;
+        
+        return palabras;
     }
 
-    public ArrayList<String> getPalabra(int n){
-        int c = 0;
-        String palabra = "";
-        ArrayList<String> palabras = new ArrayList<>();
-        return getPalabra(palabras, palabra, n, c);
+    public ArrayList<String> getPalabras(int cantVocales){
+        if(this.value != null) {
+            ArrayList<String> palabras = new ArrayList<>();
+            String palabra = "";
+            return this.getPalabras(palabras, palabra, cantVocales);
+        }
+        return null;
     }
+
+    
     
 }
