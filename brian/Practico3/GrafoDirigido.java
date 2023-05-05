@@ -78,14 +78,19 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Integer> obtenerVertices() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listVertices.keySet().iterator();
 	}
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<Arco<T>> listArcos = this.obtenerArcos(verticeId);
+
+		listArcos.next().getVerticeDestino();
+		ArrayList<Integer> adyac = new ArrayList<>();
+		while(listArcos.hasNext()) {
+			adyac.add(listArcos.next().getVerticeDestino());
+		}
+		return adyac.iterator();
 	}
 
 	@Override
@@ -96,8 +101,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listVertices.get(verticeId).iterator();
 	}
 
 }
