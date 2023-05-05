@@ -330,6 +330,7 @@ public class Tree {
 			}
 
 			if(this.left!= null){
+				
                 this.left.getWordsMaxVocal(array, copy, cant);
             }
 
@@ -357,14 +358,14 @@ public class Tree {
 			return false;
 		}
 	}
+
 	
 	public static void main(String[] args) {
 		Tree newTree = new Tree("m");
-        newTree.add("a");
-        newTree.add("l");
-		newTree.add("i");
-		newTree.printPreOrder();
-
+        // newTree.add("a");
+        // newTree.add("l");
+		// newTree.add("i");
+		// newTree.printPreOrder();
 		// newTree.deleteValue();
 		// newTree.complete();
 		// System.out.println(newTree.getRoot());
