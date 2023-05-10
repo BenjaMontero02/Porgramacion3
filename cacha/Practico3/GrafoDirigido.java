@@ -1,7 +1,6 @@
 package cacha.Practico3;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -90,13 +89,19 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		ArrayList<Arco<T>> vertices = this.listVertices.get(verticeId);
+		ArrayList<Integer> adyacentes = new ArrayList<>();
+
+		for (Arco<T> arco : vertices) {
+			adyacentes.add(arco.getVerticeDestino());
+		}
+		return adyacentes.iterator();
+
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
-
 
 		ArrayList<Arco<T>> nueva = new ArrayList<Arco<T>>();
 
