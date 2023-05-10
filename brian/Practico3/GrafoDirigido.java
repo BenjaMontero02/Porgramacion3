@@ -3,6 +3,7 @@ package brian.Practico3;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 
@@ -84,8 +85,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
 		Iterator<Arco<T>> listArcos = this.obtenerArcos(verticeId);
-
-		listArcos.next().getVerticeDestino();
 		ArrayList<Integer> adyac = new ArrayList<>();
 		while(listArcos.hasNext()) {
 			adyac.add(listArcos.next().getVerticeDestino());
@@ -95,8 +94,16 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Arco<T>> nueva = new ArrayList<Arco<T>>();
+
+		for (Map.Entry<Integer, ArrayList<Arco<T>>> entrada : this.listVertices.entrySet()){
+
+			for (Arco<T> arco : entrada.getValue()) {
+				nueva.add(arco);
+			}
+		}
+
+		return nueva.iterator();
 	}
 
 	@Override
