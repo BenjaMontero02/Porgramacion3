@@ -5,6 +5,9 @@ public class main {
 
         //grafo dirigido
         GrafoDirigido gDirigido = new GrafoDirigido<>();
+        GrafoDirigido gDirigido2 = new GrafoDirigido<>();
+        ServicioDFS dfs = new ServicioDFS(gDirigido);
+        ServicioBFS bfs = new ServicioBFS(gDirigido);
 
         //agrego vertices
         gDirigido.agregarVertice(1);
@@ -12,26 +15,29 @@ public class main {
         gDirigido.agregarVertice(3);
         gDirigido.agregarVertice(4);
         gDirigido.agregarVertice(5);
+        gDirigido.agregarVertice(6);
+        gDirigido.agregarVertice(7);
 
         //agreo arcos
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(1, 3, "p");
-        gDirigido.agregarArco(1, 4, "p");
-        gDirigido.agregarArco(3, 4, "p");
+        gDirigido.agregarArco(2, 4, "p");
+        gDirigido.agregarArco(4, 6, "p");
+        gDirigido.agregarArco(4, 7, "p");
         gDirigido.agregarArco(3, 5, "p");
-        gDirigido.agregarArco(1, 1, "p");
+        gDirigido.agregarArco(5, 4, "p");
+        gDirigido.agregarArco(4, 1, "p");
 
-        // System.out.println(gDirigido.existeArco(3, 4)); 
+        // recorrido DFS
+        // for (Integer valor : dfs.dfsForest()) {
+        //     System.out.println(valor);
+        // }
 
-        // gDirigido.borrarArco(3, 4);
 
-        // System.out.println(gDirigido.existeArco(3, 4)); 
-
-        gDirigido.borrarVertice(4);
-
-        System.out.println(gDirigido.existeArco(1, 4)); 
-
-        // gDirigido.existeArco(3, 4);
+        //recorrido BFS
+        for (Integer valor : bfs.bfsForest()) {
+            System.out.println(valor);
+        }
         
 
     }
