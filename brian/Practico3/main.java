@@ -17,27 +17,37 @@ public class main {
         gDirigido.agregarVertice(5);
         gDirigido.agregarVertice(6);
         gDirigido.agregarVertice(7);
+        gDirigido.agregarVertice(8);
+
 
         //agreo arcos
         gDirigido.agregarArco(1, 2, "k");
-        gDirigido.agregarArco(1, 3, "p");
+        gDirigido.agregarArco(2, 3, "p");
+        
         gDirigido.agregarArco(2, 4, "p");
-        gDirigido.agregarArco(4, 6, "p");
-        gDirigido.agregarArco(4, 7, "p");
-        gDirigido.agregarArco(3, 5, "p");
+        gDirigido.agregarArco(1, 4, "p");
+        gDirigido.agregarArco(4, 3, "p");
+        gDirigido.agregarArco(1, 5, "p");
         gDirigido.agregarArco(5, 4, "p");
-        gDirigido.agregarArco(4, 1, "p");
+        gDirigido.agregarArco(5, 6, "p");
+        gDirigido.agregarArco(6, 4, "p");
+        gDirigido.agregarArco(7, 8, "p");
+        gDirigido.agregarArco(8, 4, "p");
+        gDirigido.agregarArco(7, 6, "p");
+        gDirigido.agregarArco(7, 5, "p");
 
-        // recorrido DFS
-        // for (Integer valor : dfs.dfsForest()) {
-        //     System.out.println(valor);
-        // }
+
+
+         //recorrido DFS
+         for (Integer valor : dfs.dfsForest()) {
+             System.out.println(valor);
+         }
 
 
         //recorrido BFS
-        for (Integer valor : bfs.bfsForest()) {
-            System.out.println(valor);
-        }
+        //for (Integer valor : bfs.bfsForest()) {
+        //    System.out.println(valor);
+        //}
         
 
     }

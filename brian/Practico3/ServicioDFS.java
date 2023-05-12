@@ -49,6 +49,9 @@ public class ServicioDFS {
 			if(hashMapaux.get(i) == "blanco") {
 				this.dfsVisit(i, arr);
 			}
+			else
+				if (hashMapaux.get(i) == "amarillo")
+				System.out.println("ciclo detectado");	 
 		}
 
 		hashMapaux.replace(k, "negro");

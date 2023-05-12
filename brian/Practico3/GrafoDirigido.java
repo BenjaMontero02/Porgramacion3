@@ -111,4 +111,20 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return this.listVertices.get(verticeId).iterator();
 	}
 
+	public ArrayList<Integer> getLongestRoad(Integer v1, Integer v2) {
+		if(this.contieneVertice(v1) && this.contieneVertice(v2)) {
+			ArrayList<Integer> bestRoad = new ArrayList<>();
+			ArrayList<Integer> road = new ArrayList<>();
+			return this.getLongestRoad(ubiActual, v2, bestRoad, road);
+		}
+		return null;
+	}
+	private ArrayList<Integer> getLongestRoad(Integer ubiActua, Integer destino, ArrayList<Integer> list, ArrayList<Integer> list2) {
+		Iterator<Integer> ady = this.obtenerAdyacentes(v1);
+		while(ady.hasNext()) {
+			int k = ady.next();		
+		}
+		return null;
+	}
+
 }
