@@ -113,18 +113,70 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	public ArrayList<Integer> getLongestRoad(Integer v1, Integer v2) {
 		if(this.contieneVertice(v1) && this.contieneVertice(v2)) {
-			ArrayList<Integer> bestRoad = new ArrayList<>();
-			ArrayList<Integer> road = new ArrayList<>();
-			return this.getLongestRoad(ubiActual, v2, bestRoad, road);
+			ArrayList<Integer> solucion = new ArrayList<>();
+			ArrayList<Integer> aux = new ArrayList<>();
+			return this.getLongestRoad(v1, v2, solucion, aux);
 		}
 		return null;
 	}
-	private ArrayList<Integer> getLongestRoad(Integer ubiActua, Integer destino, ArrayList<Integer> list, ArrayList<Integer> list2) {
-		Iterator<Integer> ady = this.obtenerAdyacentes(v1);
+
+	private ArrayList<Integer> getLongestRoad(Integer ubiActual, Integer destino, ArrayList<Integer> solucion, ArrayList<Integer> aux) {
+		//me agrego
+		aux.add(ubiActual);
+		//si no soy destino sigo los pasos habituales
+		if(ubiActual != destino) {
+			Iterator<Integer> ady = this.obtenerAdyacentes(ubiActual);
+			while(ady.hasNext()) {
+				int key = ady.next();
+				this.getLongestRoad(key, destino, solucion, aux);
+				if(aux.contains(destino)) {
+					if(solucion.size() < aux.size()) {
+						solucion.clear();
+						solucion.addAll(aux);
+					}
+				}
+				
+			}
+		}
+		//si soy destino comparo aux con la solucion
+		else {
+			if(solucion.size() < aux.size()) {
+				solucion.clear();
+				solucion.addAll(aux);
+			}
+		}
+		//remuevo el ultimo valor del aux antes de retornar
+		aux.remove(aux.size()-1);
+		return solucion;
+	}
+
+
+
+
+	/*
+	private ArrayList<Integer> getLongestRoad(Integer ubiActual, Integer destino, ArrayList<Integer> list, ArrayList<Integer> list2, int road) {
+		list2.add(ubiActual);
+		Iterator<Integer> ady = this.obtenerAdyacentes(ubiActual);
 		while(ady.hasNext()) {
-			int k = ady.next();		
+			int k = ady.next();
+			if(k != destino) {	
+				this.getLongestRoad(k, destino, list, list2, road);
+				if(list.size() < list2.size()) {
+					list.clear();
+					list.addAll(list2);
+				}
+			}
+			else {
+				list2.add(k);
+				if(list.size() > 0  && (list.get(list.size()-1) == 5)&&(list.size() < list2.size())) {
+					list.clear();
+					list.addAll(list2);
+				}
+			}
 		}
-		return null;
+		list2.remove(list2.size()-1);
+		return list;
 	}
+	*/
 
 }

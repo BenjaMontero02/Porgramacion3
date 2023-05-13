@@ -5,7 +5,6 @@ public class main {
 
         //grafo dirigido
         GrafoDirigido gDirigido = new GrafoDirigido<>();
-        GrafoDirigido gDirigido2 = new GrafoDirigido<>();
         ServicioDFS dfs = new ServicioDFS(gDirigido);
         ServicioBFS bfs = new ServicioBFS(gDirigido);
 
@@ -23,7 +22,7 @@ public class main {
         //agreo arcos
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(2, 3, "p");
-        
+        gDirigido.agregarArco(3, 5, "p");
         gDirigido.agregarArco(2, 4, "p");
         gDirigido.agregarArco(1, 4, "p");
         gDirigido.agregarArco(4, 3, "p");
@@ -39,9 +38,7 @@ public class main {
 
 
          //recorrido DFS
-         for (Integer valor : dfs.dfsForest()) {
-             System.out.println(valor);
-         }
+         System.out.println(gDirigido.getLongestRoad(1, 4));
 
 
         //recorrido BFS
