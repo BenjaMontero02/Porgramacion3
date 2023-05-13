@@ -111,16 +111,16 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return this.listVertices.get(verticeId).iterator();
 	}
 
-	public ArrayList<Integer> getLongestRoad(Integer v1, Integer v2) {
+	public ArrayList<Integer> getLongestRoute(Integer v1, Integer v2) {
 		if(this.contieneVertice(v1) && this.contieneVertice(v2)) {
 			ArrayList<Integer> solucion = new ArrayList<>();
 			ArrayList<Integer> aux = new ArrayList<>();
-			return this.getLongestRoad(v1, v2, solucion, aux);
+			return this.getLongestRoute(v1, v2, solucion, aux);
 		}
 		return null;
 	}
 
-	private ArrayList<Integer> getLongestRoad(Integer ubiActual, Integer destino, ArrayList<Integer> solucion, ArrayList<Integer> aux) {
+	private ArrayList<Integer> getLongestRoute(Integer ubiActual, Integer destino, ArrayList<Integer> solucion, ArrayList<Integer> aux) {
 		//me agrego
 		aux.add(ubiActual);
 		//si no soy destino sigo los pasos habituales
@@ -128,7 +128,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 			Iterator<Integer> ady = this.obtenerAdyacentes(ubiActual);
 			while(ady.hasNext()) {
 				int key = ady.next();
-				this.getLongestRoad(key, destino, solucion, aux);
+				this.getLongestRoute(key, destino, solucion, aux);
 				if(aux.contains(destino)) {
 					if(solucion.size() < aux.size()) {
 						solucion.clear();

@@ -38,7 +38,7 @@ public class main {
 
 
          //recorrido DFS
-         System.out.println(gDirigido.getLongestRoad(1, 4));
+         System.out.println(gDirigido.getLongestRoute(1, 4));
 
 
         //recorrido BFS
