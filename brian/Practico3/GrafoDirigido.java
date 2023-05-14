@@ -151,32 +151,57 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	}
 
 
-
-
-	/*
-	private ArrayList<Integer> getLongestRoad(Integer ubiActual, Integer destino, ArrayList<Integer> list, ArrayList<Integer> list2, int road) {
-		list2.add(ubiActual);
-		Iterator<Integer> ady = this.obtenerAdyacentes(ubiActual);
-		while(ady.hasNext()) {
-			int k = ady.next();
-			if(k != destino) {	
-				this.getLongestRoad(k, destino, list, list2, road);
-				if(list.size() < list2.size()) {
-					list.clear();
-					list.addAll(list2);
+	//no encontre otra manera que no sea con 3 arrays
+	//puedo usar 2 pero deberia recorrer todo el grafo y es costoso en accesos a memoria
+	public ArrayList<Integer> routesToVertex(Integer vDestino) {
+		if(this.contieneVertice(vDestino)) {
+			ArrayList<Integer> solucion = new ArrayList<>();
+			ArrayList<Integer> recorrido = new ArrayList<>();
+			ArrayList<Integer> listaFinal = new ArrayList<>();
+			Iterator<Integer> verticeActual = this.obtenerVertices();
+			while(verticeActual.hasNext()) {
+				int vActual = verticeActual.next();
+				if(vActual != vDestino && !recorrido.contains(vActual)) {
+					this.routesToVertex(solucion,recorrido,vActual,vDestino);
+					for (Integer i : recorrido) {
+						if(!listaFinal.contains(i)) {
+							listaFinal.add(i);
+						}
+					}
+					recorrido.clear();
 				}
 			}
-			else {
-				list2.add(k);
-				if(list.size() > 0  && (list.get(list.size()-1) == 5)&&(list.size() < list2.size())) {
-					list.clear();
-					list.addAll(list2);
-				}
-			}
+			return listaFinal;
 		}
-		list2.remove(list2.size()-1);
-		return list;
+		return null;
 	}
-	*/
+
+	//si el vertice actual no es el destino, y no esta en el recorrido
+	//si de 1 a 4, paso por 5 y por 6, entonces 5 y 6 pueden llegar a 4
+
+	private ArrayList<Integer> routesToVertex(ArrayList<Integer> solucion, ArrayList<Integer> recorrido,Integer actual, Integer destino) {
+		if(actual != destino) {
+			solucion.add(actual);
+			Iterator<Integer> ayd = this.obtenerAdyacentes(actual);
+			while(ayd.hasNext() && recorrido.isEmpty()) {
+				int k = ayd.next();
+				this.routesToVertex(solucion,recorrido, k, destino);
+			}
+			solucion.remove(solucion.size()-1);
+			return solucion;
+		}
+		else {
+			recorrido.addAll(solucion);
+			return solucion;
+		}
+	}
+
+	//si mi vertice actual no es el destino sigo los pasos recursivos
+	//mientras el recorrido este vacio sigo recursividad
+	//si mi vertice actual es el destino freno busqueda
+
+
+
+
 
 }

@@ -8,7 +8,7 @@ public class main {
         ServicioDFS dfs = new ServicioDFS(gDirigido);
         ServicioBFS bfs = new ServicioBFS(gDirigido);
 
-        //agrego vertices
+        //VERTICES
         gDirigido.agregarVertice(1);
         gDirigido.agregarVertice(2);
         gDirigido.agregarVertice(3);
@@ -18,11 +18,9 @@ public class main {
         gDirigido.agregarVertice(7);
         gDirigido.agregarVertice(8);
 
-
-        //agreo arcos
+        //ARCOS
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(2, 3, "p");
-        gDirigido.agregarArco(3, 5, "p");
         gDirigido.agregarArco(2, 4, "p");
         gDirigido.agregarArco(1, 4, "p");
         gDirigido.agregarArco(4, 3, "p");
@@ -35,18 +33,9 @@ public class main {
         gDirigido.agregarArco(7, 6, "p");
         gDirigido.agregarArco(7, 5, "p");
 
-
-
-         //recorrido DFS
-         System.out.println(gDirigido.getLongestRoute(1, 4));
-
-
-        //recorrido BFS
-        //for (Integer valor : bfs.bfsForest()) {
-        //    System.out.println(valor);
-        //}
+         //EJERCICIO 5
+         System.out.println(gDirigido.routesToVertex(3));
         
-
     }
     
 }
