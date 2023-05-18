@@ -3,6 +3,7 @@ package cacha.Practico3;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class GrafoDirigido<T> implements Grafo<T>{
@@ -83,8 +84,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public Iterator<Integer> obtenerVertices() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.listVertices.keySet().iterator();
 	}
 
 	@Override
@@ -120,25 +120,42 @@ public class GrafoDirigido<T> implements Grafo<T>{
 		return this.listVertices.get(verticeId).iterator();
 	}
 
-	public static void main(String[] args) {
+	public ArrayList<Integer> getTheBestRoad(int v1, int v2){
+		ArrayList<Integer> camino = new ArrayList<Integer>();
+		ArrayList<Integer> aux = new ArrayList<Integer>();
+
+		this.getTheBestRoad(v1, v2, camino, aux);
 		
-		GrafoDirigido gDirigido = new GrafoDirigido<>();
-
-        //agrego vertices
-        gDirigido.agregarVertice(1);
-        gDirigido.agregarVertice(2);
-        gDirigido.agregarVertice(3);
-        gDirigido.agregarVertice(4);
-        gDirigido.agregarVertice(5);
-
-        //agreo arcos
-        gDirigido.agregarArco(1, 2, "k");
-        gDirigido.agregarArco(1, 3, "p");
-        gDirigido.agregarArco(1, 4, "p");
-        gDirigido.agregarArco(3, 4, "p");
-        gDirigido.agregarArco(3, 5, "p");
-        gDirigido.agregarArco(1, 1, "p");
-
+		return camino;
 	}
 
+	private ArrayList<Integer> getTheBestRoad(int v1, int v2, ArrayList<Integer> camino, ArrayList<Integer> aux){
+			Iterator<Integer> it = this.obtenerAdyacentes(v1);
+			aux.add(v1);
+			if(it.hasNext()){
+				while(it.hasNext()){
+					int value = it.next();
+
+					if(value != v2){
+						this.getTheBestRoad(value, v2, camino, aux);
+					}else{
+						aux.add(value);
+						if(camino.size() < aux.size()){
+							camino.clear();
+							camino.addAll(aux);
+						}
+						
+						aux.remove(aux.size()-1);
+						aux.remove(aux.size()-1);
+						return camino;
+					}
+				}
+			}else{
+				aux.remove(aux.size()-1);
+				return camino;
+			}
+			aux.remove(aux.get(aux.size()-1));
+			return camino;
+	}
 }
+

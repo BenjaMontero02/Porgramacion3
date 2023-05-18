@@ -1,4 +1,4 @@
-package brian.Practico3;
+package cacha.Practico3;
 
 public class main {
     public static void main(String[] args) {
@@ -23,6 +23,7 @@ public class main {
         //agreo arcos
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(2, 3, "p");
+        gDirigido.agregarArco(3, 8, "p");
         gDirigido.agregarArco(3, 5, "p");
         gDirigido.agregarArco(2, 4, "p");
         gDirigido.agregarArco(1, 4, "p");
@@ -32,7 +33,7 @@ public class main {
         gDirigido.agregarArco(5, 6, "p");
         gDirigido.agregarArco(6, 4, "p");
         gDirigido.agregarArco(7, 8, "p");
-        gDirigido.agregarArco(8, 4, "p");
+        gDirigido.agregarArco(8, 5, "p");
         gDirigido.agregarArco(7, 6, "p");
         gDirigido.agregarArco(7, 5, "p");
 
