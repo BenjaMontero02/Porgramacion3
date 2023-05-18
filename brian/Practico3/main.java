@@ -26,7 +26,7 @@ public class main {
 =======
 >>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4
         gDirigido.agregarArco(2, 4, "p");
-        gDirigido.agregarArco(1, 4, "p");
+        gDirigido.agregarArco(3, 1, "p");
         gDirigido.agregarArco(4, 3, "p");
         gDirigido.agregarArco(1, 5, "p");
         gDirigido.agregarArco(5, 4, "p");
@@ -53,7 +53,10 @@ public class main {
         //}
 =======
          //EJERCICIO 5
-         System.out.println(gDirigido.routesToVertex(3));
+         System.out.println(gDirigido.routesToVertex(5));
+
+         //EJERCICIO 6
+         //System.out.println(gDirigido.getRouteBetweenVertexs(1, 4, 2));
 >>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4
         
     }
