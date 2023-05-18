@@ -111,19 +111,101 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		return this.listVertices.get(verticeId).iterator();
 	}
 
-	public ArrayList<Integer> getLongestRoad(Integer v1, Integer v2) {
+	public ArrayList<Integer> getLongestRoute(Integer v1, Integer v2) {
 		if(this.contieneVertice(v1) && this.contieneVertice(v2)) {
-			ArrayList<Integer> bestRoad = new ArrayList<>();
-			ArrayList<Integer> road = new ArrayList<>();
-			return this.getLongestRoad(ubiActual, v2, bestRoad, road);
+			ArrayList<Integer> solucion = new ArrayList<>();
+			ArrayList<Integer> aux = new ArrayList<>();
+			return this.getLongestRoute(v1, v2, solucion, aux);
 		}
 		return null;
 	}
-	private ArrayList<Integer> getLongestRoad(Integer ubiActua, Integer destino, ArrayList<Integer> list, ArrayList<Integer> list2) {
-		Iterator<Integer> ady = this.obtenerAdyacentes(v1);
-		while(ady.hasNext()) {
-			int k = ady.next();		
-		}
-		return null;
-	}
+<<<<<<< HEAD
 }
+=======
+
+	private ArrayList<Integer> getLongestRoute(Integer ubiActual, Integer destino, ArrayList<Integer> solucion, ArrayList<Integer> aux) {
+		//me agrego
+		aux.add(ubiActual);
+		//si no soy destino sigo los pasos habituales
+		if(ubiActual != destino) {
+			Iterator<Integer> ady = this.obtenerAdyacentes(ubiActual);
+			while(ady.hasNext()) {
+				int key = ady.next();
+				this.getLongestRoute(key, destino, solucion, aux);
+				if(aux.contains(destino)) {
+					if(solucion.size() < aux.size()) {
+						solucion.clear();
+						solucion.addAll(aux);
+					}
+				}
+				
+			}
+		}
+		//si soy destino comparo aux con la solucion
+		else {
+			if(solucion.size() < aux.size()) {
+				solucion.clear();
+				solucion.addAll(aux);
+			}
+		}
+		//remuevo el ultimo valor del aux antes de retornar
+		aux.remove(aux.size()-1);
+		return solucion;
+	}
+
+
+	//no encontre otra manera que no sea con 3 arrays
+	//puedo usar 2 pero deberia recorrer todo el grafo y es costoso en accesos a memoria
+	public ArrayList<Integer> routesToVertex(Integer vDestino) {
+		if(this.contieneVertice(vDestino)) {
+			ArrayList<Integer> solucion = new ArrayList<>();
+			ArrayList<Integer> recorrido = new ArrayList<>();
+			ArrayList<Integer> listaFinal = new ArrayList<>();
+			Iterator<Integer> verticeActual = this.obtenerVertices();
+			while(verticeActual.hasNext()) {
+				int vActual = verticeActual.next();
+				if(vActual != vDestino && !recorrido.contains(vActual)) {
+					this.routesToVertex(solucion,recorrido,vActual,vDestino);
+					for (Integer i : recorrido) {
+						if(!listaFinal.contains(i)) {
+							listaFinal.add(i);
+						}
+					}
+					recorrido.clear();
+				}
+			}
+			return listaFinal;
+		}
+		return null;
+	}
+
+	//si el vertice actual no es el destino, y no esta en el recorrido
+	//si de 1 a 4, paso por 5 y por 6, entonces 5 y 6 pueden llegar a 4
+
+	private ArrayList<Integer> routesToVertex(ArrayList<Integer> solucion, ArrayList<Integer> recorrido,Integer actual, Integer destino) {
+		if(actual != destino) {
+			solucion.add(actual);
+			Iterator<Integer> ayd = this.obtenerAdyacentes(actual);
+			while(ayd.hasNext() && recorrido.isEmpty()) {
+				int k = ayd.next();
+				this.routesToVertex(solucion,recorrido, k, destino);
+			}
+			solucion.remove(solucion.size()-1);
+			return solucion;
+		}
+		else {
+			recorrido.addAll(solucion);
+			return solucion;
+		}
+	}
+
+	//si mi vertice actual no es el destino sigo los pasos recursivos
+	//mientras el recorrido este vacio sigo recursividad
+	//si mi vertice actual es el destino freno busqueda
+
+
+
+
+
+}
+>>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4
