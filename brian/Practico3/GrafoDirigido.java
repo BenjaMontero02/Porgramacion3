@@ -119,9 +119,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
 		}
 		return null;
 	}
-<<<<<<< HEAD
-}
-=======
 
 	private ArrayList<Integer> getLongestRoute(Integer ubiActual, Integer destino, ArrayList<Integer> solucion, ArrayList<Integer> aux) {
 		//me agrego
@@ -208,4 +205,3 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 
 }
->>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4

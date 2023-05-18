@@ -144,7 +144,6 @@ public class GrafoDirigido<T> implements Grafo<T>{
 							camino.clear();
 							camino.addAll(aux);
 						}
-						
 						aux.remove(aux.size()-1);
 						aux.remove(aux.size()-1);
 						return camino;
