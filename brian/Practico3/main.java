@@ -37,27 +37,11 @@ public class main {
         gDirigido.agregarArco(7, 6, "p");
         gDirigido.agregarArco(7, 5, "p");
 
-<<<<<<< HEAD
-        System.out.println(gDirigido.getTheBestRoad(1, 5));
-
-
-         //recorrido DFS
-        //  for (Integer valor : dfs.dfsForest()) {
-        //      System.out.println(valor);
-        //  }
-
-
-        //recorrido BFS
-        //for (Integer valor : bfs.bfsForest()) {
-        //    System.out.println(valor);
-        //}
-=======
          //EJERCICIO 5
          System.out.println(gDirigido.routesToVertex(5));
 
          //EJERCICIO 6
          //System.out.println(gDirigido.getRouteBetweenVertexs(1, 4, 2));
->>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4
         
     }
     
