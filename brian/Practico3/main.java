@@ -21,10 +21,6 @@ public class main {
         //ARCOS
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(2, 3, "p");
-<<<<<<< HEAD
-        gDirigido.agregarArco(3, 5, "p");
-=======
->>>>>>> 483f9c302525e2441b202876a7b92383f218ebd4
         gDirigido.agregarArco(2, 4, "p");
         gDirigido.agregarArco(3, 1, "p");
         gDirigido.agregarArco(4, 3, "p");
