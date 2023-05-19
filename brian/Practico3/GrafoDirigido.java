@@ -186,7 +186,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	//si el vertice actual no es el destino, y no esta en el recorrido
 	//si de 1 a 4, paso por 5 y por 6, entonces 5 y 6 pueden llegar a 4
 
-	private ArrayList<Integer> routesToVertex(HashMap<Integer,Boolean> vv,ArrayList<Integer> solucion, ArrayList<Integer> recorrido,Integer actual, Integer destino) {
+	private void routesToVertex(HashMap<Integer,Boolean> vv,ArrayList<Integer> solucion, ArrayList<Integer> recorrido,Integer actual, Integer destino) {
 		vv.replace(actual, true);
 		if(actual != destino) {
 			solucion.add(actual);
@@ -198,7 +198,6 @@ public class GrafoDirigido<T> implements Grafo<T> {
 				}
 			}
 			solucion.remove(solucion.size()-1);
-			return solucion;
 		}
 		else {
 			Iterator<Integer> verticeActual = this.obtenerVertices();
@@ -207,43 +206,53 @@ public class GrafoDirigido<T> implements Grafo<T> {
 				vv.put(value, false);
 			}
 			recorrido.addAll(solucion);
-			return solucion;
 		}
 	}
 
-	/*public ArrayList<Integer> getRouteBetweenVertexs(Integer origen, Integer destino, Integer obstacle) {
+
+	//encuentra una ruta entre 2 vertices, sin pasar por un vertice determinado
+	public ArrayList<Integer> getRouteBetweenVertexs(Integer origen, Integer destino, Integer obstacle) {
 		if(this.contieneVertice(origen) && this.contieneVertice(destino)) {
-			ArrayList<Integer> route = new ArrayList<>();
+			HashMap<Integer, Boolean> verticesVisitados = new HashMap<>();
+			this.verticesNotPassed(verticesVisitados);
+			ArrayList<Integer> finalRoute = new ArrayList<>();
 			ArrayList<Integer> recorrido = new ArrayList<>();
-			this.getRouteBetweenVertexs(route,recorrido, origen, destino, obstacle);
-			return route;
+			this.getRouteBetweenVertexs(verticesVisitados,finalRoute,recorrido, origen, destino, obstacle);
+			return finalRoute;
 		}
+		//retorno null si los vertices pasados por parametro no existen en el grafo
 		return null;
 	}
-
-	private ArrayList<Integer> getRouteBetweenVertexs(ArrayList<Integer> route, ArrayList<Integer> recorrido, Integer vActual, Integer vDest, Integer obstacle) {
-		
+	private void getRouteBetweenVertexs(HashMap<Integer,Boolean> vv,ArrayList<Integer> finalRoute, ArrayList<Integer> recorrido, Integer vActual, Integer vDest, Integer obstacle) {	
+		vv.replace(vActual, true);
 		if(vActual != vDest && vActual != obstacle) {
 			recorrido.add(vActual);
 			Iterator<Integer> ady = this.obtenerAdyacentes(vActual);
-			while(ady.hasNext() && route.isEmpty()) {
+			while(ady.hasNext() && finalRoute.isEmpty()) {
 				int k = ady.next();
-				this.getRouteBetweenVertexs(route, recorrido, vActual, vDest, obstacle)(route,recorrido, k, vDest);
+				if(vv.get(k) == false) {
+					this.getRouteBetweenVertexs(vv,finalRoute, recorrido, k, vDest, obstacle);
+				}
 			}
 			recorrido.remove(recorrido.size()-1);
-			return recorrido;
 		}
 		else if (vActual == obstacle) {
-			//si me tope con el oobstaculo vuelvo para atras en mi recorrido
-			return recorrido;
 		}
 		else {
 			//si encontre el destino agrego recorrido a la ruta deseada 
-			route.addAll(recorrido);
-			return recorrido;
+			recorrido.add(vActual);
+			finalRoute.addAll(recorrido);
 		}
-	}*/
+	}
 
+	//rellena un hashMap con todos los vertices del grafo y los señala con un false = "no visitado"
+	private void verticesNotPassed(HashMap<Integer, Boolean> hash) {
+			Iterator<Integer> v = this.obtenerVertices();
+			while(v.hasNext()) {
+				Integer k = v.next();
+				hash.put(k, false);
+			}
+	}
 
 
 
