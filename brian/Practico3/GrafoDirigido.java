@@ -159,15 +159,10 @@ public class GrafoDirigido<T> implements Grafo<T> {
 			ArrayList<Integer> recorrido = new ArrayList<>();
 			ArrayList<Integer> listaFinal = new ArrayList<>();
 			HashMap<Integer, Boolean> verticesVisitados = new HashMap<>();
-			Iterator<Integer> verticeActual = this.obtenerVertices();
-
-			while(verticeActual.hasNext()) {
-				Integer value = verticeActual.next();
-				verticesVisitados.put(value, false);
-			}
-			verticeActual = this.obtenerVertices();
-			while(verticeActual.hasNext()) {
-				int vActual = verticeActual.next();
+			this.verticesNotPassed(verticesVisitados);
+			Iterator<Integer> v = this.obtenerVertices();
+			while(v.hasNext()) {
+				int vActual = v.next();
 				if(vActual != vDestino && !recorrido.contains(vActual)) {
 					this.routesToVertex(verticesVisitados,solucion,recorrido,vActual,vDestino);
 					for (Integer i : recorrido) {
