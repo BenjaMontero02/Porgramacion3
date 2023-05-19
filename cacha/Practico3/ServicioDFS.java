@@ -54,4 +54,49 @@ public class ServicioDFS {
         auxHashMap.replace(key, "negro");
     }
 
+    public List<Integer> getAllRoadToGrafoFromVertice(Grafo g, int destino){
+        ArrayList<Integer> solucion = new ArrayList<Integer>();
+        ArrayList<Integer> actual = new ArrayList<Integer>();
+
+        Iterator<Integer> it = g.obtenerVertices();
+
+        while(it.hasNext()){
+            getAllRoadToGrafoFromVertice(g, it.next(), destino, solucion, actual);
+        }
+
+        return solucion;
+    }
+
+    private void getAllRoadToGrafoFromVertice(Grafo g, int vertice, int destino, ArrayList<Integer> solucion, ArrayList<Integer> actual ){
+        if(!solucion.contains(vertice)){
+            if(actual.contains(vertice)){
+                return;
+            }else{
+
+                if(vertice != destino){
+                    actual.add(vertice);
+                    Iterator<Integer> it = g.obtenerAdyacentes(vertice);
+
+                    while(it.hasNext()){
+                        getAllRoadToGrafoFromVertice(g, it.next(), destino, solucion, actual);
+                    }
+
+                    if(!actual.isEmpty()){
+                        actual.remove(actual.size()-1);
+                    }
+                    return;
+
+                }else if(vertice == destino){
+                    //si es igual, entonces agarro la primer posicion del arreglo actual y la inserto en solucion
+                    if(!actual.isEmpty()){
+                        if(!solucion.contains(actual.get(0))){
+                            solucion.add(actual.get(0));
+                        }
+                        solucion.add(actual.get(actual.size()-1));
+                    }
+                    return;
+                }
+            }
+        }
+    }
 }
