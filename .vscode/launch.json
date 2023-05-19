@@ -1,0 +1,63 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Pila",
+            "request": "launch",
+            "mainClass": "Pila",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "brian.Practico2.Main",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "main",
+            "request": "launch",
+            "mainClass": "brian.Practico3.main",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "Pila(1)",
+            "request": "launch",
+            "mainClass": "cacha.Practico1.Pila",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "Tree",
+            "request": "launch",
+            "mainClass": "cacha.Practico2.Tree",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "main(1)",
+            "request": "launch",
+            "mainClass": "cacha.Practico3.main",
+            "projectName": "Porgramacion3_95fd03b4"
+        },
+        {
+            "type": "java",
+            "name": "Main(1)",
+            "request": "launch",
+            "mainClass": "lucas.Main",
+            "projectName": "Porgramacion3_95fd03b4"
+        }
+    ]
+}
