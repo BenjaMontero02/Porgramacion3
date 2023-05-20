@@ -171,10 +171,14 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	private boolean routesToVertex(ArrayList<Integer> solucion, ArrayList<Integer> vertices,Integer actual, Integer destino) {
 		if(actual != destino) {
 			solucion.add(actual);
-			Iterator<Integer> ayd = this.obtenerAdyacentes(actual);
+			Iterator<Integer> ady = this.obtenerAdyacentes(actual);
 			boolean destinoEncontrado = false;
-			while(ayd.hasNext() && !destinoEncontrado) {
-				int k = ayd.next();
+			while(ady.hasNext() && !destinoEncontrado) {
+				int k = ady.next();
+				if(vertices.contains(ady)) {
+					vertices.add(actual);
+					return true;
+				}
 				if(!solucion.contains(k)) {
 					destinoEncontrado = this.routesToVertex(solucion,vertices, k, destino);
 				}	
