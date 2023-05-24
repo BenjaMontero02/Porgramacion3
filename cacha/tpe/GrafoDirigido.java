@@ -5,46 +5,38 @@ import java.util.Map;
 
 public class GrafoDirigido<T> implements Grafo<T> {
 
-    private int cantArcos;
-    private HashMap<Integer, ArrayList<Arco<T>>> listVertices;
+	private int cantArcos;
+	private HashMap<Integer, ArrayList<Arco<T>>> listVertices;
 
-    public GrafoDirigido(){
-        this.listVertices = new HashMap<Integer, ArrayList<Arco<T>>>();
-        this.cantArcos = 0;
-    }
+	public GrafoDirigido() {
+		this.cantArcos = 0;
+		this.listVertices = new HashMap<Integer, ArrayList<Arco<T>>>();
+	}
 
 	@Override
 	public void agregarVertice(int verticeId) {
-		this.listVertices.put(verticeId, new ArrayList<Arco<T>>());
+		ArrayList<Arco<T>> arcos = new ArrayList<>();
+		this.listVertices.put(verticeId, arcos);
 	}
 
 	@Override
 	public void borrarVertice(int verticeId) {
-
-        Iterator<Arco<T>> it = this.obtenerArcos();
-
-        while (it.hasNext()) {
-            Arco<T> arco = it.next();
-            if(arco.getVerticeDestino() == verticeId) {
-                this.borrarArco(arco.getVerticeOrigen(), verticeId);
-            }
-        }
-
-        this.listVertices.remove(verticeId);
-
+		this.listVertices.remove(verticeId);
 	}
 
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
-        Arco<T> arco = new Arco<T>(verticeId1, verticeId2, etiqueta);
-        this.listVertices.get(verticeId1).add(arco);
-        this.cantArcos++;
+		if (this.contieneVertice(verticeId1) && this.contieneVertice(verticeId2)) {
+			Arco<T> newArco = new Arco<>(verticeId1, verticeId2, etiqueta);
+			this.listVertices.get(verticeId1).add(newArco);
+			this.cantArcos++;
+		}
+
 	}
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-
-        if(this.listVertices.containsKey(verticeId1)) {
+		if(this.listVertices.containsKey(verticeId1)) {
 			this.listVertices.get(verticeId1).remove(this.obtenerArco(verticeId1, verticeId2));
 			this.cantArcos--;
 		}
@@ -52,16 +44,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public boolean contieneVertice(int verticeId) {
-        return this.listVertices.containsKey(verticeId);
+		return this.listVertices.containsKey(verticeId);
 	}
 
 	@Override
 	public boolean existeArco(int verticeId1, int verticeId2) {
-		if(this.obtenerArco(verticeId1, verticeId2) != null) {
-            return true;
-        }else{
-            return false;
-        }
+		return obtenerArco(verticeId1, verticeId2) != null;
 	}
 
 	@Override
@@ -76,43 +64,37 @@ public class GrafoDirigido<T> implements Grafo<T> {
 
 	@Override
 	public int cantidadVertices() {
-        return this.listVertices.size();
-
+		return this.listVertices.size();
 	}
 
 	@Override
 	public int cantidadArcos() {
-        return this.cantArcos;
-
+		return this.cantArcos;
 	}
 
 	@Override
 	public Iterator<Integer> obtenerVertices() {
-        return this.listVertices.keySet().iterator();
+		return this.listVertices.keySet().iterator();
 	}
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-        ArrayList<Arco<T>> vertices = this.listVertices.get(verticeId);
-		ArrayList<Integer> adyacentes = new ArrayList<>();
-
-		for (Arco<T> arco : vertices) {
-			adyacentes.add(arco.getVerticeDestino());
+		Iterator<Arco<T>> listArcos = this.obtenerArcos(verticeId);
+		ArrayList<Integer> adyac = new ArrayList<>();
+		while(listArcos.hasNext()) {
+			adyac.add(listArcos.next().getVerticeDestino());
 		}
-		return adyacentes.iterator();
+		return adyac.iterator();
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
 		ArrayList<Arco<T>> nueva = new ArrayList<Arco<T>>();
-
 		for (Map.Entry<Integer, ArrayList<Arco<T>>> entrada : this.listVertices.entrySet()){
-
 			for (Arco<T> arco : entrada.getValue()) {
 				nueva.add(arco);
 			}
 		}
-
 		return nueva.iterator();
 	}
 
@@ -120,5 +102,4 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	public Iterator<Arco<T>> obtenerArcos(int verticeId) {
 		return this.listVertices.get(verticeId).iterator();
 	}
-
 }

@@ -24,7 +24,7 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public void borrarVertice(int verticeId) {
-        this.listVertices.remove(verticeId);
+		
 	}
 
 	@Override

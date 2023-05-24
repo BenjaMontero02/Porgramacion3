@@ -9,7 +9,11 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
+<<<<<<< HEAD
             "projectName": "Porgramacion3_95fd03b4"
+=======
+            "projectName": "Porgramacion3_e53fc113"
+>>>>>>> 56c20dde6ee827473f35eeafbb65a21be4056510
         },
         {
             "type": "java",
