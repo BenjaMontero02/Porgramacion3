@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "Porgramacion3_e53fc113"
+        },
+        {
+            "type": "java",
             "name": "main",
             "request": "launch",
             "mainClass": "brian.Practico3.main",
