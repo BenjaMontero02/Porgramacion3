@@ -23,8 +23,8 @@ public class main {
         gDirigido.agregarArco(1, 2, "k");
         gDirigido.agregarArco(2, 3, "p");
         gDirigido.agregarArco(2, 4, "p");
+        gDirigido.agregarArco(1, 4, "p");
         gDirigido.agregarArco(3, 1, "p");
-
         gDirigido.agregarArco(4, 3, "p");
         gDirigido.agregarArco(1, 5, "p");
         gDirigido.agregarArco(5, 4, "p");

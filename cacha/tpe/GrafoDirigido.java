@@ -1,15 +1,11 @@
-package cacha.Practico3;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
-public class GrafoDirigido<T> implements Grafo<T>{
+public class GrafoDirigido<T> implements Grafo<T> {
 
     private int cantArcos;
-
     private HashMap<Integer, ArrayList<Arco<T>>> listVertices;
 
     public GrafoDirigido(){
@@ -24,7 +20,18 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public void borrarVertice(int verticeId) {
+
+        Iterator<Arco<T>> it = this.obtenerArcos();
+
+        while (it.hasNext()) {
+            Arco<T> arco = it.next();
+            if(arco.getVerticeDestino() == verticeId) {
+                this.borrarArco(arco.getVerticeOrigen(), verticeId);
+            }
+        }
+
         this.listVertices.remove(verticeId);
+
 	}
 
 	@Override
@@ -36,16 +43,16 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public void borrarArco(int verticeId1, int verticeId2) {
-        if(this.listVertices.containsKey(verticeId1)){
-            this.listVertices.get(verticeId1).remove(this.obtenerArco(verticeId1, verticeId2));
-        } 
-        this.cantArcos--;
-	}
 
+        if(this.listVertices.containsKey(verticeId1)) {
+			this.listVertices.get(verticeId1).remove(this.obtenerArco(verticeId1, verticeId2));
+			this.cantArcos--;
+		}
+	}
 
 	@Override
 	public boolean contieneVertice(int verticeId) {
-		return this.listVertices.containsKey(verticeId);
+        return this.listVertices.containsKey(verticeId);
 	}
 
 	@Override
@@ -59,49 +66,44 @@ public class GrafoDirigido<T> implements Grafo<T>{
 
 	@Override
 	public Arco<T> obtenerArco(int verticeId1, int verticeId2) {
-        ArrayList<Arco<T>> arcos = this.listVertices.get(verticeId1);
-
-        Arco<T> buscado = new Arco(verticeId1, verticeId2, null);
-
-        if(arcos != null && arcos.contains(buscado)){
-            return arcos.get(arcos.indexOf(buscado));
-        }else{
-            return null;
-        }
-
+		ArrayList<Arco<T>> arcos = this.listVertices.get(verticeId1);
+		Arco<T> arcoAux = new Arco<T>(verticeId1, verticeId2, null);
+		if(arcos != null && arcos.contains(arcoAux)) {
+			return arcos.get(arcos.indexOf(arcoAux));
+		}
+		return null;
 	}
 
 	@Override
 	public int cantidadVertices() {
-		return this.listVertices.size();
+        return this.listVertices.size();
+
 	}
 
 	@Override
 	public int cantidadArcos() {
-		return this.cantArcos;
+        return this.cantArcos;
+
 	}
 
 	@Override
 	public Iterator<Integer> obtenerVertices() {
-		return this.listVertices.keySet().iterator();
+        return this.listVertices.keySet().iterator();
 	}
 
 	@Override
 	public Iterator<Integer> obtenerAdyacentes(int verticeId) {
-
-		ArrayList<Arco<T>> vertices = this.listVertices.get(verticeId);
+        ArrayList<Arco<T>> vertices = this.listVertices.get(verticeId);
 		ArrayList<Integer> adyacentes = new ArrayList<>();
 
 		for (Arco<T> arco : vertices) {
 			adyacentes.add(arco.getVerticeDestino());
 		}
 		return adyacentes.iterator();
-
 	}
 
 	@Override
 	public Iterator<Arco<T>> obtenerArcos() {
-
 		ArrayList<Arco<T>> nueva = new ArrayList<Arco<T>>();
 
 		for (Map.Entry<Integer, ArrayList<Arco<T>>> entrada : this.listVertices.entrySet()){
@@ -119,41 +121,4 @@ public class GrafoDirigido<T> implements Grafo<T>{
 		return this.listVertices.get(verticeId).iterator();
 	}
 
-	public ArrayList<Integer> getTheBestRoad(int v1, int v2){
-		ArrayList<Integer> camino = new ArrayList<Integer>();
-		ArrayList<Integer> aux = new ArrayList<Integer>();
-
-		this.getTheBestRoad(v1, v2, camino, aux);
-		
-		return camino;
-	}
-
-	private ArrayList<Integer> getTheBestRoad(int v1, int v2, ArrayList<Integer> camino, ArrayList<Integer> aux){
-			Iterator<Integer> it = this.obtenerAdyacentes(v1);
-			aux.add(v1);
-			if(it.hasNext()){
-				while(it.hasNext()){
-					int value = it.next();
-
-					if(value != v2){
-						this.getTheBestRoad(value, v2, camino, aux);
-					}else{
-						aux.add(value);
-						if(camino.size() < aux.size()){
-							camino.clear();
-							camino.addAll(aux);
-						}
-						aux.remove(aux.size()-1);
-						aux.remove(aux.size()-1);
-						return camino;
-					}
-				}
-			}else{
-				aux.remove(aux.size()-1);
-				return camino;
-			}
-			aux.remove(aux.get(aux.size()-1));
-			return camino;
-	}
 }
-

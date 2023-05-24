@@ -8,6 +8,7 @@ import java.util.List;
 public class ServicioDFS {
     private HashMap<Integer, String> auxHashMap;
 	private Grafo<?> grafo;
+    private int value = 0;
 
 	public ServicioDFS(Grafo<?> grafo) {
 		this.grafo = grafo;
@@ -38,7 +39,7 @@ public class ServicioDFS {
 		return arr;
 	}
 
-    public void dfsVisit(int key, ArrayList<Integer> arr){
+    private void dfsVisit(int key, ArrayList<Integer> arr){
         auxHashMap.replace(key, "amarillo");
         arr.add(key);
 
@@ -61,42 +62,34 @@ public class ServicioDFS {
         Iterator<Integer> it = g.obtenerVertices();
 
         while(it.hasNext()){
-            getAllRoadToGrafoFromVertice(g, it.next(), destino, solucion, actual);
+            int z = it.next();
+            if(z != destino){
+                getAllRoadToGrafoFromVertice(g, z, destino, solucion, actual);
+            }
         }
 
         return solucion;
     }
 
     private void getAllRoadToGrafoFromVertice(Grafo g, int vertice, int destino, ArrayList<Integer> solucion, ArrayList<Integer> actual ){
-        if(!solucion.contains(vertice)){
-            if(actual.contains(vertice)){
-                return;
-            }else{
+            Iterator<Integer> it = g.obtenerAdyacentes(vertice);
+            actual.add(vertice);
+            while(it.hasNext()){
 
-                if(vertice != destino){
-                    actual.add(vertice);
-                    Iterator<Integer> it = g.obtenerAdyacentes(vertice);
+                value = it.next();
 
-                    while(it.hasNext()){
-                        getAllRoadToGrafoFromVertice(g, it.next(), destino, solucion, actual);
-                    }
-
-                    if(!actual.isEmpty()){
-                        actual.remove(actual.size()-1);
-                    }
-                    return;
-
-                }else if(vertice == destino){
-                    //si es igual, entonces agarro la primer posicion del arreglo actual y la inserto en solucion
-                    if(!actual.isEmpty()){
-                        if(!solucion.contains(actual.get(0))){
-                            solucion.add(actual.get(0));
+                if(!solucion.contains(value) && !solucion.contains(vertice)){
+                    solucion.add(vertice);
+                }else if(value == destino){
+                    for (Integer k : actual) {
+                        if(!solucion.contains(k)){
+                            solucion.add(k);
                         }
-                        solucion.add(actual.get(actual.size()-1));
                     }
-                    return;
+                }else if(!actual.contains(value)){
+                    getAllRoadToGrafoFromVertice(g, value, destino, solucion, actual);
                 }
             }
-        }
+            actual.remove(actual.size()-1);
     }
 }
