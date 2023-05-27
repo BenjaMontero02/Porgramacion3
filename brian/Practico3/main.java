@@ -6,7 +6,7 @@ public class main {
         //grafo dirigido
         GrafoDirigido gDirigido = new GrafoDirigido<>();
         ServicioDFS dfs = new ServicioDFS(gDirigido);
-        ServicioCaminos caminos = new ServicioCaminos(gDirigido);
+        Caminos caminos = new Caminos(gDirigido);
 
         //VERTICES
         gDirigido.agregarVertice(1);
@@ -34,11 +34,8 @@ public class main {
         gDirigido.agregarArco(7, 6, "p");
         gDirigido.agregarArco(7, 5, "p");
 
-         //EJERCICIO 5
-        System.out.println(caminos.caminos(1, 4, 8));
-
-         //EJERCICIO 6
-         //System.out.println(gDirigido.getRouteBetweenVertexs(1, 4, 2));
+        //ejercicio 7
+        System.out.println(caminos.getShortestRoad(2, 4));
         
     }
     
