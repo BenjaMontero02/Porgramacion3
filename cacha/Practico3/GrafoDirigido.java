@@ -9,12 +9,14 @@ import java.util.Map;
 public class GrafoDirigido<T> implements Grafo<T>{
 
     private int cantArcos;
+	private ArrayList<Integer>solucion;
 
     private HashMap<Integer, ArrayList<Arco<T>>> listVertices;
 
     public GrafoDirigido(){
         this.listVertices = new HashMap<Integer, ArrayList<Arco<T>>>();
         this.cantArcos = 0;
+		this.solucion = new ArrayList<Integer>();
     }
 
 	@Override
@@ -155,5 +157,95 @@ public class GrafoDirigido<T> implements Grafo<T>{
 			aux.remove(aux.get(aux.size()-1));
 			return camino;
 	}
+
+	public ArrayList<Integer> getConexion(int a, int b, int i) {
+
+		ArrayList<Integer>actual = new ArrayList<Integer>();
+		solucion.clear();
+		this.getConexion(a, b, i, actual);
+		return solucion;
+	}
+
+	private void getConexion(int a, int b, int i, ArrayList<Integer> actual){
+		if(a == b){
+			actual.add(a);
+			ArrayList<Integer> copia = new ArrayList<Integer>();
+			for (Integer x : actual) {
+				copia.add(x);
+			}
+			solucion.addAll(copia);
+			return;
+		}else if(a == i){
+			if(!solucion.isEmpty()){
+				actual.clear();
+			}
+			return;
+		}else{
+			if(!actual.isEmpty() && actual.get(actual.size()-1) == b){
+				return;
+			}else{
+				actual.add(a);
+
+				Iterator<Integer> it = this.obtenerAdyacentes(a);
+
+				while(it.hasNext()){
+					int k = it.next();
+					if(k != i && (!actual.isEmpty() && actual.get(actual.size()-1) != b)){
+						this.getConexion(k, b, i, actual);
+					}
+				}
+
+				if(actual.get(actual.size()-1) == b){
+					return;
+				}else{
+					actual.remove(actual.size()-1);
+				}
+			}
+		}
+	}
+
+	public ArrayList<Integer> theShortestRoad(int a, int b){
+		this.solucion.clear();
+		ArrayList<Integer> result = new ArrayList<Integer>();
+
+		this.theShortestRoad(a, b, result);
+		return solucion;
+	}
+
+	private void theShortestRoad(int a, int b, ArrayList<Integer> result){
+		
+		if(a != b && !result.contains(a)){
+			result.add(a);
+
+			Iterator<Integer> it = this.obtenerAdyacentes(a);
+		
+			while(it.hasNext()){
+				int k = it.next();
+
+				this.theShortestRoad(k, b, result);
+			}
+
+			result.remove(result.size()-1);
+
+		}else if(!result.contains(a)){
+
+			result.add(a);
+
+			if(solucion.isEmpty()){
+				for (Integer integer : result) {
+					solucion.add(integer);
+				}
+
+			}else if(result.size() < solucion.size()){
+				solucion.clear();
+				for (Integer integer : result) {
+					solucion.add(integer);
+				}
+			}
+
+			result.remove(result.size()-1);
+		}
+	}
+
 }
 
