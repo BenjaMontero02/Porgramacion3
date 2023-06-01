@@ -105,6 +105,7 @@ public class backTracking {
         return listaDeListas;
     }
 
+    //deberia poner un for dentro del primer if ???
     private void getCombinaciones(Integer m, int numeroActual,int indice, int suma) {
         suma += numeroActual;
         solucion.add(numeroActual);
