@@ -109,11 +109,14 @@ public class backTracking {
     private void getCombinaciones(Integer m, int numeroActual,int indice, int suma) {
         suma += numeroActual;
         solucion.add(numeroActual);
-        if(suma != m) { //suma no es igual a M
+        if(suma != m) { //suma no es igual a M}
             if(suma < m) { //si es menor debo seguir sumando
-                indice++;
-                numeroActual = numeros.get(indice); //cambio el valor del numero actual
-                this.getCombinaciones(m,numeroActual,indice,suma);
+            //AHORA TENGO QUE LLAMAR A CADA VALOR DEL ARREGLO DESPUES DEL NUMERO ACTUAL (es como si llamara a los ady)
+                while(indice < numeros.size()) {
+                    indice++;
+                    numeroActual = numeros.get(indice); //cambio el valor del numero actual
+                    this.getCombinaciones(m,numeroActual,indice,suma);
+                }
             }
         }
         else { //suma es igual a M (solucion para agregar)
