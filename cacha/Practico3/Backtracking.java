@@ -3,6 +3,8 @@ package cacha.Practico3;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.sql.DataSource;
+
 public class Backtracking{
 
     private ArrayList<Integer> solucion;
@@ -51,6 +53,124 @@ public class Backtracking{
                 actual.remove(actual.size()-1);
             }
         }
+    }
 
+    public ArrayList<Integer> sumaConjuntos(ArrayList<Integer> valores, int m){
+        this.solucion.clear();
+
+        for (Integer value: valores){
+            this.sumaConjuntos(valores, m, value);
+        }
+        return this.solucion;
+    }
+    
+    private void sumaConjuntos(ArrayList<Integer> valores, int m, int valor){
+        int total = valor;
+        ArrayList<Integer> result  = new ArrayList<>();
+        result.add(valor);
+        for (Integer value : valores) {
+            
+            total += value;
+
+            if(total == m){
+                result.add(value);
+                ArrayList<Integer> copia = new ArrayList();
+
+                for (Integer integer : result) {
+                    copia.add(integer);
+                }
+
+                this.solucion.addAll(copia);
+                total = valor;
+            }else if (total > m){
+                total = total - m;
+            }
+        }
+    }
+}
+
+public void backtracking(casilla1, casillo2){ //asumo que a la matriz le puedo perdir los booleanos; // obtengo los valores de la matriz en la pos del parametro
+
+    arragloBooleanos = casilla1.getValores(); //esto me devuelve los booleanos de la casilla
+    arregloActual.add(casilla1)
+    for (por cada valor de arregloBooleanos) {
+        
+        if(boolean == true){
+            casillaSiguiente = casilla1.obtenerCasillaEnValor(boolean);
+            if(casillaSiguiente == casilla2){
+                arregloActual.add(casilla2) //agrego la ultima casilla para completar el camino
+                break // para que salga del for
+            }else if(!arregloActual.contains(casillaSiguiente)){
+                this.backtracking(casillaSiguiente, casilla2);
+            }
+        }
+    }
+
+    if(solucion.isEmpty()){//si la solucion es vacia es xq es el primer camino que encontre
+        for(por cada elemento de arregloActual){
+            solucion.add(elemento)
+        }
+    }else if(solucion.size() > arregloActual.size()){ //entonces el acutal encintrado es una mejor solucion
+        solucion.clear();
+        for(por cada elemento de arregloActual){
+            solucion.add(elemento);
+        }
+    }
+
+    if(!arregloActual.isEmpty()) {// si no esta vacio el arreglo
+        //le saco la ultima casilla agregada
+        arregloActual.remove(arregloActual.size()-1);
+    }
+
+}
+
+public void sumaDeConjuntos(Estado estado){
+
+    int valor = this.conjutos.sacarCopiaPrimero();
+    estado.agregar(valor);
+
+    if(estado.getSumaSolucion())){
+
+    }
+}
+
+public void particionDeConjunto(Estado estado){
+
+    if(!estado.tieneMas()){
+        if(estado.sumarPrimerSolucion() == estado.sumarSegundaSolucion()){
+            ArrayList<ArrayList<Integer>>solucion1 = new ArrayList<>();
+            solucion1.add(estado.obtenerSolucion1());
+            solucion1.add(estado.obtenerSolucion2());
+            this.solucion.add(solucion1);
+        }
+
+    }else{
+        estado.agregarASolucion1();
+        particionDeConjunto(estado);
+        estado.sacarDeUltimoSolucion1();//lo saca y lo vuelve a meter en el Conjunto inicial
+
+        estado.agregarASolucion2();
+        particionDeConjunto(estado);
+        estado.sacarDeUltimoSolucion2();
+        
+    }
+}
+
+public void tareasAProcesadores(Estado estado){
+    //Estado tiene un CI de tareas y un CI de procesadores
+    if (!estado.tieneTareas()) {
+        if(estado.sumarSolucionProcesadores() < this.sumarSolucion(this.solucion)){//
+            this.solucion = estado.copiarSolucion();
+        }
+    }else {
+        Tarea tarea = estado.obtenerPrimerTarea();
+
+        for (Procesador procesador : estado.getProcesadores()){
+            procesador.agregar(tarea); //agraga a lo ultimo
+            this.tareasAProcesadores(estado);
+            procesador.sacarTarea(); //saca la ultima tarea
+        }
+
+        estado.agregarAPrincipio(tarea);
     }
 }
