@@ -174,3 +174,84 @@ public void tareasAProcesadores(Estado estado){
         estado.agregarAPrincipio(tarea);
     }
 }
+
+public void getRecorridoCaballo(Estado estado){
+    //mi estado contiene una matriz de casillas, donde cada casilla tiene un booleando si fue 
+    //pisada o no. Tambien un puntero que es donde se mueve paara recorrer las casillas
+
+
+    //este metodo me devulve si existe una casilla por abajo o por siguiente
+    if(estado.casillaActual() == estado.origen()){
+        if(solucion.size() < estado.solucionActual().size()){
+            solucion.clear();
+            solucion.addAll(estado.getSolucion());
+        }
+    }else{
+        //pregunto si existe una casilla a la izquierda
+        if(estado.casillaIzquierda()){
+            estado.avanzarCasillaAIzquierda();
+
+            Casilla casilla = estado.getCasilla();
+
+            if(casilla.visitada()){
+                estado.addCasillaASolucion(casilla);
+            }
+            }else{
+                estado.avanzarCasillaDerecha();
+            }
+
+            if(estado.casillaIzquierda()){
+                estado.avanzarCasillaAIzquierda();
+    
+                Casilla casilla = estado.getCasilla();
+    
+                if(casilla.visitada()){
+                    estado.addCasillaASolucion(casilla);
+                    getRecorridoCaballo(estado);
+                }
+            }else{
+                estado.avanzarCasillaDerecha();
+            }
+    
+
+
+                if(estado.casillaAbajo()){
+                    estado.avanzarCasillaAAbajo();
+        
+                    Casilla casilla = estado.getCasilla();
+        
+                    if(casilla.visitada()){
+                        estado.addCasillaASolucion(casilla);
+                    }
+                }else{
+                    estado.avanzarCasillaArriba();
+                }
+
+                if(estado.casillaArriba()){
+                    estado.avanzarCasillaAArriba();
+        
+                    Casilla casilla = estado.getCasilla();
+        
+                    if(casilla.visitada()){
+                        estado.addCasillaASolucion(casilla);
+                    }
+                }else{
+                    estado.avanzarCasillaAbajo();
+                }
+
+                if(estado.casillaDerecha()){
+                    estado.avanzarCasillaADerecha();
+        
+                    Casilla casilla = estado.getCasilla();
+        
+                    if(casilla.visitada()){
+                        estado.addCasillaASolucion(casilla);
+                    }
+                }else{
+                    estado.avanzarCasillaIzquierda();
+                }
+        }   
+    }
+
+    }
+}
