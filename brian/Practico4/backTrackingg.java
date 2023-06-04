@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class backTrackingg {
 
-    private ArrayList<ArrayList> solucionPrincipal;
+    private ArrayList<ArrayList<Integer>> solucionPrincipal;
+    private ArrayList<Casilla> solucion;
 
     public backTrackingg() {
         this.solucionPrincipal = new ArrayList<>();
@@ -42,21 +43,45 @@ public class backTrackingg {
     // manera de minimizar el tiempo de ejecución del total de tareas.
 
     public void asignarTareas(Estado estado) {
-        if(estado.tareasIsEmpty()) {
+        if(estado.tareasIsEmpty()) { //pregunto si estado se quedo sin tareas
 
         }
         else {
-            // saco procesador de lista de procesadores y lo agrego a mi solucion
-            // mi solucion contiene procesadores
-            estado.sacarPrimerProcesador();
+
+            Tarea tarea = estado.obtenerPrimerTarea();
 
             for (Procesador procesador : estado.solucionProcesadores()) {
                 //saco la primer tarea de mi lista de tareas y la agrego a la lista de tareas del Procesador
-                procesador.addTarea(estado.sacarPrimerTarea()); //agrego primer tarea de la lista de tareas a la lista de tareas del procesador
+                procesador.addTarea(tarea); //agrego primer tarea de la lista de tareas a la lista de tareas del procesador
                 this.asignarTareas(estado); //llamo recursivamente
-                estado.addTareaEnPrimerPosicion(procesador.sacarUltimaTarea()); //devuelvo la tarea ala primer posicion
+                procesador.quitarTarea(); //saco primer tarea de la lista de tareas del procesador
             }
+
+            estado.addTarea(tarea); //devuelvo la tarea ala primer posicion de la lista de tareas del estado
         }
     }
+
+    //EJERCICIO 6
+    //DUDA (tengo que saber el orden en el que la casilla consulta sus lados?)
+    //DUDA (el recorrido puede ser ORIGEN, SIGCASILLA, ORIGEN)
+
+    public void getCaminoCaballo(Estado estado, Casilla casilla) { //la casilla inicialmente es el origen
+        estado.addCasillaARecorrido(casilla); //agrego casilla a recorrido actual
+        if(casilla == estado.getPrimerCasillaRecorrido() && estado.recorridoCasillasSize() > 1) { //chequeo si ya volvi a la casilla origen y si acaba de empezar el recorrido
+            solucion.addAll(estado.getRecorridoCasillas()); // agrego recorrido a la solucion
+        }
+        else {
+            for (Casilla c : estado.casillasAdy(casilla)) { //me devuelve las casillas adyacentes de una casilla determinada(N,O,S,E)
+                if(!estado.RecorridocontieneCasilla(c)) { //pregunto si no pase ya por la casilla a la que quiero avanzar
+                    this.getCaminoCaballo(estado, c); //Sigo con recursividad
+                }
+                else if(c == estado.getPrimerCasillaRecorrido()) {
+                    this.getCaminoCaballo(estado, c); //Sigo con recursividad por que encontro el origen
+                }
+            }
+        }
+        estado.eliminarCasillaRecorrido(casilla); //elimino casilla del recorrido (ESTO ESTA BIEN?)
+    }
+
     
 }
