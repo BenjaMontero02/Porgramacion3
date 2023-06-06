@@ -67,21 +67,27 @@ public class backTrackingg {
 
     public void getCaminoCaballo(Estado estado, Casilla casilla) { //la casilla inicialmente es el origen
         estado.addCasillaARecorrido(casilla); //agrego casilla a recorrido actual
-        if(casilla == estado.getPrimerCasillaRecorrido() && estado.recorridoCasillasSize() > 1) { //chequeo si ya volvi a la casilla origen y si acaba de empezar el recorrido
+        if(casilla == estado.getCasillaOrigen()) { //chequeo si ya volvi a la casilla origen
             solucion.addAll(estado.getRecorridoCasillas()); // agrego recorrido a la solucion
+
         }
         else {
             for (Casilla c : estado.casillasAdy(casilla)) { //me devuelve las casillas adyacentes de una casilla determinada(N,O,S,E)
                 if(!estado.RecorridocontieneCasilla(c)) { //pregunto si no pase ya por la casilla a la que quiero avanzar
                     this.getCaminoCaballo(estado, c); //Sigo con recursividad
                 }
-                else if(c == estado.getPrimerCasillaRecorrido()) {
+                else if(c == estado.getCasillaOrigen()) {
                     this.getCaminoCaballo(estado, c); //Sigo con recursividad por que encontro el origen
                 }
             }
         }
         estado.eliminarCasillaRecorrido(casilla); //elimino casilla del recorrido (ESTO ESTA BIEN?)
     }
+
+    //EJERCICIO 7
+    // Tablero mágico. Dado un tablero de tamaño n x n, construir un algoritmo que ubique (si es posible)
+    // n*n números naturales diferentes, entre 1 y un cierto k (con k>n*n), de manera tal que la suma de
+    // las columnas y de las filas sea igual a S.
 
     
 }
