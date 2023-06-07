@@ -6,6 +6,7 @@ public class backTrackingg {
 
     private ArrayList<ArrayList<Integer>> solucionPrincipal;
     private ArrayList<Casilla> solucion;
+    private ArrayList<Casilla> recorridoActual;
 
     public backTrackingg() {
         this.solucionPrincipal = new ArrayList<>();
@@ -68,7 +69,10 @@ public class backTrackingg {
     public void getCaminoCaballo(Estado estado, Casilla casilla) { //la casilla inicialmente es el origen
         estado.addCasillaARecorrido(casilla); //agrego casilla a recorrido actual
         if(casilla == estado.getCasillaOrigen()) { //chequeo si ya volvi a la casilla origen
-            solucion.addAll(estado.getRecorridoCasillas()); // agrego recorrido a la solucion
+            if(solucion.size() < estado.casillaOrigenSize()) { //pregunto si mi recorrido actual es mayor a la solucion anteriormente adquirida
+                solucion.clear();
+                solucion.addAll(estado.getRecorridoCasillas()); // agrego recorrido a la solucion
+            }
 
         }
         else {
