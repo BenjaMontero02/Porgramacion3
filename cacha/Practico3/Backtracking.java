@@ -251,7 +251,74 @@ public void getRecorridoCaballo(Estado estado){
                     estado.avanzarCasillaIzquierda();
                 }
         }   
-    }
+}
+// Tablero mágico. Dado un tablero de tamaño n x n, construir un algoritmo
+// que ubique (si es posible)
+// n*n números naturales diferentes, entre 1 y 
+//un cierto k (con k>n*n), de manera tal que la suma de
+// las columnas y de las filas sea igual a S
+public void tableroMagico(Estado estado){
+    if(estado.matrizEstaLlena()){
+        int contador = 0;
+        boolean solucionEncontrada = true;
+        while(contador < estado.getCantFilas() && solucionEncontrada){
+            int sumaFila = estado.getSumaFila(contador);
+            int sumaColumna = estado.getSumaColumna(contador);
 
+            if(sumaFila != suma || sumaColumna != suma){
+                solucionEncontrada = false;
+            }
+        }
+
+        if(solucionEncontrada){
+            solucion = estado.getSolucionActualMatriz();
+        }
+
+    }else{
+        for(Integer i : estado.getListK()){
+
+            estado.sacarElemntoK(i);
+            estado.addAMatriz(i);
+
+            if(estado.filaEstaLlena()){
+                if(estado.filaEsValida()){
+                    tableroMagico(estado);
+                }
+            }
+
+            estado.agregarEnOrden(i);
+            estado.eliminarDeMatriz(i);
+        }
     }
 }
+
+public void piramide(Estado estado){
+
+    // mi estado tiene una piramide que es un hashmap que su clave es el nivel de la piramide
+    // y su valor es un arreglo de enteros
+
+    if(estado.piramideEstaLlena()){
+
+        //la solucion tiene un estructura igual a la piramide
+
+        solucion = estado.getPiramideCompleta();
+
+    }else{
+        for (Integer i : estado.getConjuntoK()) {
+            estado.sacarElementoDeK(i);
+            estado.agregarAPiramide(i);
+
+            if(estado.getSumaHijos(i)){  
+                //este metodo me devuelve si la suma de los hijos de i son igual a i
+                //y si no tiene hijos de devulve un true
+                piramide(estado);
+            }
+
+            estado.sacarDePiramide(i);
+            estado.agregarElementoEnOrden(i);
+        }
+    }
+}
+
+
+
