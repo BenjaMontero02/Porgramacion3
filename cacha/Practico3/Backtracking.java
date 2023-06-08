@@ -319,6 +319,67 @@ public void piramide(Estado estado){
         }
     }
 }
+// mi solocion de atributo es una lista de listas de enteros
+public void ejercicio10(Estado estado){
 
+    // mi estado tiene un conjunto que ya inicializado con sus valores
+    // y tiene de atributo una list solucion de enteros
 
+    if(estado.getSolucion().size() == n){
+        if(estado.getSumaSolucion == 0){
+            solucion.add(estado.getSolucion());
+        }
+    }else{
+        for (Integer i : estado.getConjunto()) {
+            estado.sacarElementoEnPrimerLugar(i);
+            estado.agregarASolucion(i);
+            ejercicio10(estado);
+            estado.agregarElementoEnPrimerLugar(i);
+            estado.sacarDeSolucion(i);
+        }
+    }
+}
+
+public void ejercicio11(Estado estado){
+    if(estado.solucionContieneBaseCarga()){
+        if(solucion.isEmpty()){
+            solucion.addAll(estado.getSolucion());
+        }else if(solucion.size() > estado.getSizeSolucion()){
+            solucion.clear();
+            solucion.addAll(estado.getSolucion());
+        }
+    }else{
+        //supongamos q recien arranca entonces mi estado tiene la casilla donde comienza 
+        if(!estado.solucionContieneCasillaActual()){
+            estado.addSolucion(estado.getCasillaActual());
+        }
+
+        if(estado.puedeIrAbajo()){
+            estado.moverCasillaAbajo();
+            ejercicio11(estado);
+            estado.moverCasillaArriba();
+        }
+
+        if(estado.puedeIrIzquierda()){
+            estado.moverCasillaIzquierda();
+            ejercicio11(estado);
+            estado.moverCasillaArriba();
+
+        }
+
+        if(estado.puedeIrDerecha()){
+            estado.moverCasillaDerecha();
+            ejercicio11(estado);
+            estado.moverCasillaIzquierda();
+        }
+
+        if(estado.puedeIrArriba()){
+            estado.moverCasillaArriba();
+            ejercicio11(estado);
+            estado.moverCasillaAbajo();
+        }
+
+        estado.sacarCasillaDeSolucion(estado.getCasillaActual());
+    }
+}
 
