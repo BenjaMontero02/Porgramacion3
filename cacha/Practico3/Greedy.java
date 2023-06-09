@@ -98,9 +98,8 @@ public class Greedy{
 
 
     public ArrayList ejercicio7(int k, ArrayList<Objeto> c){
-
         boolean noHayMas = false;
-        while(!candidatos.isEmpty() || !noHayMas){
+        while(!candidatos.isEmpty() && !noHayMas){
             Integer cazador = seleccionarCazador(c); //me da el primer cazador que encuentre
             if(cazador != null){ //si encontro un cazador ya que puede que no hay mas cazadores
                 Objeto leon = seleccionarLeon(cazador, k); //me agarra
@@ -109,12 +108,13 @@ public class Greedy{
                     pareja.add(cazador);
                     pareja.add(leon);
                     solucion.add(pareja);
+                }else{
+                    noHayMas = true;
                 }
             }else{
-                notifyData = true;
+                noHayMas = true;
             }
         }
-
         return solucion;
     }
 }
