@@ -1,6 +1,7 @@
 package cacha.Practico3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Greedy{
     private static int puntero = 0;
@@ -57,6 +58,33 @@ public class Greedy{
 
                 if(ultima.getFin() <= actividad.getInicio()){
                     solucion.add(actividad);
+                }
+            }
+        }
+
+        return solucion;
+    }
+
+    public void ej4Dijkstra(Grafo g, int verticeOrigen){
+        ArrayList<Integer> distancia = new ArrayList<Integer>();
+        HashMap<Integer, Integer> padre = new HashMap();
+
+        for (Integer vertices : g.getVertices()) {
+            distancia.add(vertices);
+            padre.put(vertices, null);
+        }
+
+        padre.replace(verticeOrigen, 0);
+        ArrayList<Integer> solucion = new ArrayList<Integer>();
+
+        for (Integer vertice : g.getVerices()) {
+            Vertice seleccionado =  seleccionar(distancia); //me selecciona el vertice con el menor valor
+            solucion.add(vertice);
+            
+            for (Integer verticeAdyacente : g.getAdyacentes(vertice)) {
+                if((distancia[seleccionado] + dist_entre(seleccionado,verticeAdyacente)) < distancia[verticeAdyacente]) {
+                    distancia[verticeAdyacente] = distancia[seleccionado] + dist_entre(seleccionado,verticeAdyacente);
+                    padre.replace(verticeAdyacente, seleccionado);
                 }
             }
         }
