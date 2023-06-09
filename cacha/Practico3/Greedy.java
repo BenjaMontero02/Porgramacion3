@@ -40,16 +40,16 @@ public class Greedy{
                 pesoActual = peso;
             }
         }
-
         return x;
-
     }
 
+    //recibo arreglo ordenado c
     public ArrayList<Actividades> getActDisponibles(ArrayList<Actividades>c){
         ArrayList<Actividades> solucion = new ArrayList<Actividades>();
+        this.ordenarPorOrdenDeInicio(c);
         while(!c.isEmpty()){
             
-            Actividad actividad = seleccionar(c); //selecciona la primer actividad del conjuntoy la saca
+            Actividad actividad = seleccionar(c); //selecciona la primer actividad del conjunto y la saca
 
             if(solucion.isEmpty()){
                 solucion.add(actividad);
@@ -86,6 +86,32 @@ public class Greedy{
                     distancia[verticeAdyacente] = distancia[seleccionado] + dist_entre(seleccionado,verticeAdyacente);
                     padre.replace(verticeAdyacente, seleccionado);
                 }
+            }
+        }
+        return solucion;
+    }
+
+
+    public ArrayList ejercicio4(Grafo g, int origen){
+
+    }
+
+
+    public ArrayList ejercicio7(int k, ArrayList<Objeto> c){
+
+        boolean noHayMas = false;
+        while(!candidatos.isEmpty() || !noHayMas){
+            Integer cazador = seleccionarCazador(c); //me da el primer cazador que encuentre
+            if(cazador != null){ //si encontro un cazador ya que puede que no hay mas cazadores
+                Objeto leon = seleccionarLeon(cazador, k); //me agarra
+                if(leon != null){
+                    ArrayList pareja = new ArrayList<>();
+                    pareja.add(cazador);
+                    pareja.add(leon);
+                    solucion.add(pareja);
+                }
+            }else{
+                notifyData = true;
             }
         }
 
