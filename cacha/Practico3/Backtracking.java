@@ -320,7 +320,7 @@ public void piramide(Estado estado){
     }
 }
 // mi solocion de atributo es una lista de listas de enteros
-public void ejercicio10(Estado estado){
+public void ejercicio10(Estado estado, Casilla actual){
 
     // mi estado tiene un conjunto que ya inicializado con sus valores
     // y tiene de atributo una list solucion de enteros
@@ -340,7 +340,15 @@ public void ejercicio10(Estado estado){
     }
 }
 
-public void ejercicio11(Estado estado){
+public ArrayList<Casilla> ejercicioRobot(Casilla actual, Casilla baseDeCarga){
+    Estado estado = new Estado(baseDeCarga); 
+    // estado contiene una arreglo de casillas solucion de atributo
+    //lo inicializo con la base de carga
+    ejercicio11(estado, actual);
+    return solucion;
+}
+
+private void ejercicio11(Estado estado, Casilla actual){
     if(estado.solucionContieneBaseCarga()){
         if(solucion.isEmpty()){
             solucion.addAll(estado.getSolucion());
@@ -349,37 +357,15 @@ public void ejercicio11(Estado estado){
             solucion.addAll(estado.getSolucion());
         }
     }else{
-        //supongamos q recien arranca entonces mi estado tiene la casilla donde comienza 
-        if(!estado.solucionContieneCasillaActual()){
-            estado.addSolucion(estado.getCasillaActual());
-        }
-
-        if(estado.puedeIrAbajo()){
-            estado.moverCasillaAbajo();
-            ejercicio11(estado);
-            estado.moverCasillaArriba();
-        }
-
-        if(estado.puedeIrIzquierda()){
-            estado.moverCasillaIzquierda();
-            ejercicio11(estado);
-            estado.moverCasillaArriba();
-
-        }
-
-        if(estado.puedeIrDerecha()){
-            estado.moverCasillaDerecha();
-            ejercicio11(estado);
-            estado.moverCasillaIzquierda();
-        }
-
-        if(estado.puedeIrArriba()){
-            estado.moverCasillaArriba();
-            ejercicio11(estado);
-            estado.moverCasillaAbajo();
-        }
-
-        estado.sacarCasillaDeSolucion(estado.getCasillaActual());
+        for(Casilla casilla : estado.getCasillasVecinas(actual))
+            if(casilla.esValida()) // si es 1, procede
+                if(!estado.solucionContieneCasillaActual(casilla)){
+                    //este if, funcionaria como poda, ya que si mi solucion contiene esa casilla,
+                    //es al pedo volver a pasar por la misma
+                    estado.addSolucion(casilla);
+                    ejercicio11(estado, casilla);
+                    estado.sacarCasillaDeSolucion(casilla);
+                }
     }
 }
 

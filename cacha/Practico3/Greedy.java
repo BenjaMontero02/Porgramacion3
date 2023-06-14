@@ -100,9 +100,11 @@ public class Greedy{
     public ArrayList ejercicio7(int k, ArrayList<Objeto> c){
         boolean noHayMas = false;
         while(!candidatos.isEmpty() && !noHayMas){
-            Integer cazador = seleccionarCazador(c); //me da el primer cazador que encuentre
+            Integer cazador = seleccionarCazador(c); 
+            //me da el primer cazador que encuentre y lo saca de candidatos
             if(cazador != null){ //si encontro un cazador ya que puede que no hay mas cazadores
-                Objeto leon = seleccionarLeon(cazador, k); //me agarra
+                Objeto leon = seleccionarLeon(cazador, k, c); 
+                //me agarra un leon valido a menor a k y lo saca de candidatos
                 if(leon != null){
                     ArrayList pareja = new ArrayList<>();
                     pareja.add(cazador);
@@ -116,5 +118,76 @@ public class Greedy{
             }
         }
         return solucion;
+    }
+
+    // Desde un cierto conjunto grande de ciudades del interior de una provincia, se desean transportar
+    // cereales hasta alguno de los 3 puertos pertenecientes al litoral de la provincia. Se pretende
+    // efectuar el transporte total con mínimo costo sabiendo que el flete es más caro cuanto más
+    // distancia tiene que recorrer. Dé un algoritmo que resuelva este problema, devolviendo para cada
+    // ciudad el camino que debería recorrer hacia el puerto de menor costo.
+
+    public HashMap ejercicio5(Grafo g){
+        Ciudad ciudadAgregada = new Ciudad();
+
+        g.agregarCiudadConectadaALosPuertos(ciudadAgregada);
+
+        ArrayList<Ciudad> padre = djisktra(g, ciudadAgregada);
+        ArrayList<Ciudad> camino = new ArrayList<Ciudad>();
+
+        for(Ciudad ciudad : g.getCiudades()){  
+            Ciudad i = ciudad;
+            while(padre[i] != indefinido){
+                camino.add(padre[i]);
+                i = padre[i];
+            }
+
+            solucion.put(ciudad, camino);
+            camino.clear();
+        }
+
+        return solucion;
+    }
+
+    public ArrayList<Ciudad> viajante(Grafo g, Ciudad origen){
+
+        ArrayList<Ciudad> ciudad = g.obtenerCiudad();
+        ArrayList<Ciudad> camino = new ArrayList<Ciudad>();
+        camino.add(origen);
+        ciudad.moverAPrimero(origen);
+
+        for (Ciudad ciudad1 : ciudad) {
+            Ciuadad ciudadElejida = seleccionar(ciudad1, ciudad);
+            ciudad.remove(ciudadElejida);
+            camino.add(ciudadElejida);
+        }
+
+        camino.add(origen);
+    
+    } 
+
+    public void colorearGrafo(Grafo g){
+        ArrayList<Color> colores = new ArrayList<>();
+        colores.add(colorRandom());
+        boolean pintado = false;
+        for(Vertice i : g.getVertices()){
+            
+            for(Color color : colores){
+
+                if(i.puedoPintarlo(color)){
+                    pintarVertice(i,color);
+                    pintado = true;
+                }
+
+                if(pintado == true){
+                    break;
+                }
+            }
+
+            if(pintado == false){
+                Color color = colorRandom();
+                pintarVertice(i, color);
+                colores.add(color);
+            }
+        }
     }
 }
