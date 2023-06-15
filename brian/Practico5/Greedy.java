@@ -1,6 +1,11 @@
 package brian.Practico5;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
+import brian.Practico3.Grafo;
 
 public class Greedy {
 
@@ -8,7 +13,7 @@ public class Greedy {
     //x es aun array de fracciones
     //W es el peso limite de la mochila
     //w es una array de pesos
-    public ArrayList<Double> ejercicio2(W, x, w) {
+    public ArrayList<Double> ejercicio2(Integer W, Integer x, Integer w) {
 
         //inicializo el array de fracciones con ceros    
         for (int i=0; i < n; i++) {
@@ -113,32 +118,125 @@ public class Greedy {
 
         ArrayList<ArchivoCancion> varianteB = new ArrayList<ArchivoCancion>();
         ArrayList<ArchivoCancion> varianteA = new ArrayList<ArchivoCancion>();
-        int tamaño_actual = 0;
+        int tamanio_actual = 0;
         boolean terminarBusqueda = false;
 
-        //mientras tamaño actual no iguale/supere el limite o terminarbusqueda == true sigo iterando
-        while(tamaño_actual < tamMaxCD && !terminarBusqueda) {
-                ArchivoCancion archivoA = seleccionar(C); //seleccionar(C) selecciona en orden descendente
-                ArchivoCancion archivoB = seleccionar(C); //seleccionar(C) selecciona candidatos del conjunto C en orden Ascendente(basado en kilobytes)
-                if(factible(tamaño_actual,tamMaxCD,archivo)) { //explicado a bajo
-                    tamaño_actual = tamaño_actual + archivo.tamañoKilobytes();
-                    varianteB.agregar(archivo);
-                }
-                else { //si la suma del tamaño total mas el nuevo archivo supera el limite no tiene sentido seguir buscando
-                    terminarBusqueda = true;
-                }
+        //mientras tamaño actual_A no iguale/supere el limite o terminarbusqueda == true sigo iterando
+        while(tamanio_actual < tamMaxCD && !terminarBusqueda) {
+                
+            ArchivoCancion archivoA = this.seleccionarDESC(C); //seleccionar(C) selecciona candidatos en orden descendente por kilobytes (asumo que no repite candidatos)                
+            
+            if(factible(tamanio_actual,tamMaxCD,archivoA)) { //explicado a bajo
+                tamanio_actual = tamanio_actual + archivoA.tamañoKilobytes();
+                varianteB.agregar(archivoA);
+            }
+            else { //si la suma del tamaño total mas el nuevo archivo supera el limite no tiene sentido seguir buscando
+                terminarBusqueda = true;
+            }
+        }
+
+        terminarBusqueda = true;
+
+        while(tamanio_actual < tamMaxCD && !terminarBusqueda) {
+            ArchivoCancion archivoB = this.seleccionarASC(C); //seleccionar(C) selecciona candidatos candidatos en orden Ascendente(basado en kilobytes) asumo no repite candidatos
+
+            if(factible(tamanio_actual,tamMaxCD,archivoB)) { //explicado a bajo
+                    tamanio_actual = tamanio_actual + archivoB.tamañoKilobytes();
+                    varianteB.agregar(archivoB);
+            }
+
+            else { //si la suma del tamaño total mas el nuevo archivo supera el limite no tiene sentido seguir buscando
+                terminarBusqueda = true;
+            }
         }
     }
 
     /*
     public boolean factible(int tamanio_actual, int tamMaxCD, ArchivoCancion archivo)
-        if(tamaño_actual + archivo.tamañoKilobytes() <= tamMaxCD && this.cantCancionesPorGenero(archivo.getGenero())) {
+        if(tamaño_actual + archivo.tamañoKilobytes() <= tamMaxCD && this.cantCancionesPorGenero(archivo.getGenero()) < 3) {
             return true;
         }
         else {
             return false;
         }
      */
+
+    public Array Dijkstra(Grafo G, Vértice origen) {
+
+        for each (Vértice v en G){// Inicialización
+            dist[v] = infinito // La distancia inicial desde el origen al vértice v
+            // se establece en infinito
+            padre[v] = indefinido // El nodo anterior en el camino óptimo desde el origen
+        }
+
+        dist[origen] = 0 // Distancia desde el origen hasta el origen
+        S = vacío // S será el conjunto de vértices ya considerados
+
+        while (G.Vértices – S) {//no es vacío // loop principal
+            u = vértice en (G.Vértices – S); //tal que dist[u] tiene el menor valor
+            S = S U {u}; //agrego vertice a la solucion
+            for each v en (G.Vértices – S) que sea adyacente a u {
+                if ((dist[u] + dist_entre(u, v)) < dist[v]) {
+                    dist[v] = dist[u] + dist_entre(u, v);
+                    padre[v] = u;
+                }
+            }
+        }
+        return padre[];
+
+    }
+
+    public ArrayList<ArrayList> ejercicio(Grafo grafo) {
+        ArrayList<Integer> camino = new ArrayList<>();
+
+        Ciudad ciudad = new Ciudad();
+        grafo.agregarCiudad(ciudad);
+        ArrayList<Integer> padres = Dijkstra(grafo, ciudad);
+        for (Integer padre : padres) {
+            while(!encontrePuerto) {
+                camino.agregar(padre);
+                padres.getPadre(padre);
+            }
+
+            
+        }
+
+    }
+
+
+    public ArrayList<Ciudad> problemaViajante(Grafo grafo, Ciudad origen) {
+
+        ArrayList<Ciudades> ciudades = grafo.obtenerCiudades();
+        ArrayList<Ciudades> camino = new ArrayList<Ciudades>();
+        camino.agregarCiudad(origen);
+        ciudades.ordenarEnPrimeraPosicion(origen);
+
+        while(!ciudades.vacio()) {
+            Ciudad proxCiudad = this.seleccionar(ciudades, camino.ultimaCiudad()); //obtiene la ciudad mas cercana (arco con distancia mas corta)
+            camino.agregarCiudad(proxCiudad);
+            ciudades.eliminarCiudad(proxCiudad);
+        }
+
+        camino.agregar(origen);
+
+        return camino;
+    }
+
+    public void colorearGrafo(Grafo g) {
+
+        ArrayList<Color> colores = new ArrayList<>();
+        HashMap<Integer, String> verticesPintados = new HashMap<>(); //los colores estan inicializados sin ningun color
+        ArrayList<Integer> vertices = new ArrayList();
+        Iterator<Integer> it = g.obtenerVertices();
+        while (it.hasNext()) {
+            Integer vertice = it.next();
+            color c = seleccionarColor(vertice, verticesPintados);
+            // el metodo seleccionar tiene un while que itera sobre todos los coloress y por casa uno pregunta al 
+            //vertice si alguno de sus ady tiene ese color, si no lo tiene en la siguiente iteracion intenta con 
+            //otro color, asi hasta terminar , si no logro pintar, crea un color y lo pinta
+            verticesPintados.put(vertice, c);
+        }
+    }
 
 
 

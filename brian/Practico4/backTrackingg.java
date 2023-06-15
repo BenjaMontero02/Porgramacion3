@@ -93,5 +93,26 @@ public class backTrackingg {
     // n*n números naturales diferentes, entre 1 y un cierto k (con k>n*n), de manera tal que la suma de
     // las columnas y de las filas sea igual a S.
 
-    
+    private void caballoDeAtila(Estado estado,Casilla origen, Casilla casilla, ArrayList<Casilla> camino){
+        if(camino.contains(origen)){//
+            estado.addSolucion(camino); //guarda una solucion en un atributo de tipo array solucion
+        }
+        else{//sigo explorando arbol
+            for(Casilla casillaActual : estado.casillasAdyacentes(casilla)){ //me devuelve una casilla adyacente a la actual a la que el caballo puede ir (arriba, abajo, izq o derecha)
+                if(casillaActual != null){
+                    if(!camino.contains(casillaActual)){
+                        camino.add(casillaActual);
+                        caballoDeAtila(estado, origen, casillaActual, camino);
+                        estado.eliminarCasillaActual(casillaActual);// elimina la casilla encontrada de la solucion
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<Casilla> caballoDeAtila(Casilla CasillaActual, Casilla origen){
+        ArrayList<Casilla> camino = new ArrayList<>();
+        this.caballoDeAtila(null,origen, CasillaActual, camino);
+        return camino;
+    }
 }
