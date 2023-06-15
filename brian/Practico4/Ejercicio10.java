@@ -52,22 +52,23 @@ public class Ejercicio10 {
 
     public void robotLimpieza(Estado estado, Casilla posActual) {
         if(estado.solucionActualContieneDestinto()) {
-            if(estado.solucionFinalVacia()) {
-                estado.agregarSolucionActual(estado.getSolucionActual());
+            if(this.solucion.isEmpty()) {
+                this.solucion = estado.getSolucionActual();
             }
             else {
-                if(estado.getSolucionFinalSize() > estado.getSolucionActualSize());
+                if(estado.getSolucionFinalSize() < this.solucion.size());{
+                    this.solucion = estado.getSolucionActual();
+                }
             }
         }
-        else { //sigo explorando arbol
+        else {
             for (Casilla casilla : estado.getCeldasContiguas(posActual)) {
-                if(casilla) {
+                if(casilla.esValida())
                     if(!estado.solucionActualContiene(casilla)) {
                         estado.agregarCasillaSolucionActual(casilla);
                         this.robotLimpieza(estado, casilla);
                         estado.eliminarCasillaSolucionActual(casilla);
                     }
-                }
             }
         }
     }
