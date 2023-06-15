@@ -168,11 +168,13 @@ public class Greedy{
     public void colorearGrafo(Grafo g){
         ArrayList<Color> colores = new ArrayList<>();
         colores.add(colorRandom());
+        //colorRandom me genera un color aleatorio
         boolean pintado = false;
         for(Vertice i : g.getVertices()){
             
             for(Color color : colores){
 
+                //puedo pintarlo verifica que no haya un vertice con ese color pintado
                 if(i.puedoPintarlo(color)){
                     pintarVertice(i,color);
                     pintado = true;
@@ -182,12 +184,16 @@ public class Greedy{
                     break;
                 }
             }
-
+            //si salio del for y pintado es false, entonces es xq no existe un color
+            //que pueda pintar ese vertice, entonces creo uno nuevo y lo pinto
             if(pintado == false){
                 Color color = colorRandom();
                 pintarVertice(i, color);
                 colores.add(color);
             }
+
+            //seteo el pintado false para la prox iteracion
+            pintado = false;
         }
     }
 }
