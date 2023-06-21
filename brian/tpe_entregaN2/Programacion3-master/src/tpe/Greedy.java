@@ -27,13 +27,14 @@ public class Greedy {
         int distanciaMasCorta = 1000;
         HashMap<Integer,Integer> solucionPadres = new HashMap<>();
         Iterator<Integer> it = grafo.obtenerVertices();
-
+        int suma = 0;
         //hago un dijkstra por cada vertice del grafo para conseguir la mejor solucion
         while(it.hasNext()) {
             Integer v = it.next();
             this.Dijkstra(grafo, v);
-            if(this.getSumaDistancias() < distanciaMasCorta) {
-                distanciaMasCorta = this.getSumaDistancias(); //me quedo con la distancia mas corta
+            suma = this.getSumaDistancias();
+            if( suma < distanciaMasCorta) {
+                distanciaMasCorta = suma; //me quedo con la distancia mas corta
                 solucionPadres.clear(); //limpio solucion actual y me quedo con la mejor
                 solucionPadres.putAll(padre);
             }    
@@ -75,6 +76,8 @@ public class Greedy {
             while(ady.hasNext()) {
                 Integer k = ady.next();
                 if(!solucion.contains(k)) { //pregunto si todavia no fue considerado
+                    //podes cambiar ese metodo feo y poner el nuevo que hice getDistancia(Grafo, actual, k)
+                    //te devuelve un int nene
                     Integer nuevaDistancia = distancia.get(actual) + distanciaEntreVertices(actual, k); //suma de dist de actual al origen mas dist entre actual y ady
                     if(nuevaDistancia < distancia.get(k)) {
                         distancia.replace(k, nuevaDistancia); //nueva dist de k al origen
@@ -105,6 +108,8 @@ public class Greedy {
     }
 
     //OBTENGO DISTANCIA ENTRE 2 VERTICES
+
+    //METODO HORRIBLE
     private Integer distanciaEntreVertices(Integer origen,Integer destino) {
 		ArrayList<String[]> lines = datos.readContent(); //CAMBIE EL METODO A PUBLICO POR AHORA
 		for (String[] line: lines) {
@@ -115,12 +120,19 @@ public class Greedy {
                 return dist; //retorno distancia entre vertices
             }
 		}
-        
         return null;
 		
 	}
 
-    
+    private Integer getDistancia(Grafo grafo, int origen, int destino) {
+        Integer valor = grafo.obtenerArco(origen, destino);
+
+        if(valor != null){
+            return valor;
+        }
+
+        return 0;
+    }
 }
 
 
