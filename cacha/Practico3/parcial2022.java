@@ -159,3 +159,147 @@ public class Final2019{
         }
     }
 }
+
+public class Final2019{
+
+
+    
+    public ArrayList<Esquina> ejercicio3(Grafo g, Esquina v, Esquina w){
+        ArrayList<Esquina> camino = new ArrayList<>();
+        //inicializo mi estado con un el arreglo y el grafo, mi origen y destino
+        //en mi estado la esquina v la seteo como esquinaActual y w es mi destino
+        Estado estado = new Estado(camino, g, v, w);
+        resolverEjercicio(estado);
+        return solucion;
+    }
+
+    private void resolverEjercicio(Estado e){
+        //getDestino me devuelve el destino a donde llegar
+        if(e.getCamino().contains(e.getDestino())){
+            //al size de mi arreglo camino, lo multiplico x 100 que es la distancia de las cuadras
+            if(this.solucion == null){
+                this.solucion = (e.getSizeDeCamino() * 100);
+            }else{
+                if(this.solucion > (e.getSizeDeCamino() * 100)){
+                    this.solucion = (e.getSizeDeCamino() * 100);
+                }
+            }
+        }else{
+            for(Esquina esquina : e.getAdyacentes(e.esquinaActual())){
+                if(!e.getCamino().contains(esquina)){
+                    e.agregarEsquinaACamino(esquina);
+                    resolverEjercicio(e);
+                    e.sacarEsquinaDeCamino(esquina);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Estacion> getEstacionesACargar(List<Estacion> estaciones, float kmmax){
+        
+        Iterator<Estacion> it = estaciones.iterator();
+
+        backTracking(estaciones, kmmax){
+
+        }
+
+    }
+
+    public boolean ejercicio2(Grafo g, int x){
+        ArrayList<Integer> recorrido = new ArrayList<Integer>();
+
+        //hashmap es atributo de clase
+        llenarHashMapEnBlanco(g);
+
+        Iterator it = g.getVertices();
+        boolean cumple = false;
+
+        while(it.hasNext()){
+            int vertice = (int) it.next();
+            if(hashMapaux.get(vertice) == 'blanco'){
+                dfsVisit(vertice, g, cumple, recorrido)
+            }
+        }
+
+        return cumple;
+    }
+
+    private void dfsVisit(int vertice, Grafo g, boolean cumple, ArrayList recorrido, int x){
+        Iterator it = g.obtenerAdyacentes(v);
+        this.hashMap.put(vertice, 'amarillo');
+
+        recorrido.add(vertice);
+        while(it.hasNext()){
+            int k = it.next();
+            
+            if(recorrido.contains(k)){
+                recorrido.add(k);
+                cumple = sumarArcos(k, recorrido, x);
+                return;
+            }else{
+                dfsVisit(k, g, cumple, recorrido, x);
+            }
+        }
+
+    }
+
+
+    public ArrayList<ArrayList> ejercicio2(ArrayList<Integer> conjunto){
+        //mi estado tiene un arreglo solucionParcial vacio
+        //tambien le paso mi arreglo conjuntos para que me haga una copia
+        ArrayList<Integer> solucionParcial = new ArrayList<Integer>();
+        ordenarConjuntoDeMenorAMayor(conjunto);
+        backTracking(solucionParcial, conjunto);
+        return solucion;
+    }
+
+    private void backTracking(ArrayList<Integer> solucionParcial, ArrayList<Integer> conjunto) {
+        if(conjunto.isEmpty()){
+            ArrayList<Integer> copia = new ArrayList<Integer>();
+            copia.addAll(solucionParcial);
+            solucion.add(copia);
+        }else{
+            for(Integer i : conjunto){
+                solucionParcial.add(i);
+                conjunto.remove(i);
+                backTracking(solucionParcial, conjunto);
+                solucionParcial.remove(i);
+                conjunto.addOrdenadoDeMenorAMayor(i);
+            }
+        }
+    }
+
+    public boolean ejercicioConjuntoNaturales(ArrayList<Integer> conjunto){
+        ordenarConjuntoDeMenorAMayor(conjunto);
+        Estado estado = new Estado(conjunto);
+        solucionEjercicioConjunto(estado);
+        //solucion comienza en falso es atributo de clase
+        return solucion;
+        
+    }
+
+    private void solucionEjercicioConjunto(Estado e){
+        if(!e.tieneElementos()){
+
+        }else{
+            //me lo agrega al primer c1 y lo elimina de mi conjunto
+            int i = e.sacarPrimerElementoDeConjunto();
+            e.agregarAC1(i);
+            solucionEjercicioConjunto(e);
+            e.sacarElementoDeC1(i);
+            e.agregarElementoOrdenadoAConjunto(i);
+
+            int i = e.sacarPrimerElementoDeConjunto();
+            e.agregarAC1(i);
+            solucionEjercicioConjunto(e);
+            e.sacarElementoDeC1(i);
+            e.agregarElementoOrdenadoAConjunto(i);
+
+            int i = e.sacarPrimerElementoDeConjunto();
+            e.agregarAC1(i);
+            solucionEjercicioConjunto(e);
+            e.sacarElementoDeC1(i);
+            e.agregarElementoOrdenadoAConjunto(i);
+        }
+    }
+}

@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import brian.Practico3.GrafoNoDirigido;
+
 
 public class CSVReader {
 
@@ -15,13 +17,15 @@ public class CSVReader {
 		this.path = path;
 	}
 	
+	//creo que deberia llegar el grafo y ahi lo inicializas o pasarlo por constructor
+	//asi lo instancias accediendo al atributo
 	public void read() {
 		
 		// Obtengo una lista con las lineas del archivo
 		// lines.get(0) tiene la primer linea del archivo
 		// lines.get(1) tiene la segunda linea del archivo... y así
 		ArrayList<String[]> lines = this.readContent();
-		GrafoNoDirigido ciudad = new GrafoNoDirigido();
+		GrafoNoDirigido<T> ciudad = new GrafoNoDirigido();
 		
 		for (String[] line: lines) {
 			// Cada linea es un arreglo de Strings, donde cada posicion guarda un elemento
@@ -29,6 +33,9 @@ public class CSVReader {
 			Integer destino = Integer.parseInt(line[1].trim().substring(1));
 			Integer etiqueta = Integer.parseInt(line[2].trim());
 			// Aca instanciar lo que necesiten en base a los datos leidos
+			ciudad.agregarVertice(origen);
+			ciudad.agregarVertice(destino);
+			ciudad.agregarArco(origen, destino, etiqueta);
 		}
 		
 	}
