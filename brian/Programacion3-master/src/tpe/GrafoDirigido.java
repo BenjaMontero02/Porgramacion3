@@ -21,6 +21,12 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	 */
 	@Override
 	public void agregarVertice(int verticeId) {
+		/*
+		 * if(!this.contieneVertice(verticeId)) {
+		 	return;ArrayList<Arco<T>> arcos = new ArrayList<>();
+			this.listVertices.put(verticeId, arcos);
+		 * }
+		 */
 		ArrayList<Arco<T>> arcos = new ArrayList<>();
 		this.listVertices.put(verticeId, arcos);
 	}
@@ -45,6 +51,7 @@ public class GrafoDirigido<T> implements Grafo<T> {
 	*/
 	@Override
 	public void agregarArco(int verticeId1, int verticeId2, T etiqueta) {
+		//agrear al if !this.existeArco(verticeId1,verticeId2) &&
 		if (this.contieneVertice(verticeId1) && this.contieneVertice(verticeId2)) {
 			Arco<T> newArco = new Arco<>(verticeId1, verticeId2, etiqueta);
 			this.listVertices.get(verticeId1).add(newArco);
